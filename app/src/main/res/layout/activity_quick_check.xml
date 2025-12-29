@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    style="@style/FramePage"
+    android:background="@drawable/bg_landscape"
+    android:paddingBottom="160dp">
+
+
+
+        <!-- Titel -->
+        <TextView
+            android:id="@+id/text_quick_check_title"
+            android:text="@string/check_in"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/ActivityHeaderText"
+            />
+    <include layout="@layout/view_check_pause"/>
+
+    <include layout="@layout/view_check_inner_state" />
+
+    <include layout="@layout/view_check_time" />
+
+
+
+
+    </LinearLayout>
+

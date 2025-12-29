@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+
+    <application
+        android:name=".BodhisattvaFriendApp"
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.BodhisattvaFriend">
+        <activity android:name=".ImportPracticeActivity" />
+        <activity android:name=".ExportPracticeActivity" />
+        <activity android:name=".AddPracticeActivity" />
+        <activity android:name=".EditDeletePracticeActivity" />
+        <activity android:name=".MeditationActivity"
+            android:exported="true" android:clearTaskOnLaunch="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
+        <activity android:name=".MeditationSelectionActivity" />
+        <activity android:name=".VowActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity
+            android:name=".QuickCheckActivity"
+            android:exported="true" android:clearTaskOnLaunch="true"
+            android:theme="@style/Theme.BodhisattvaFriend.Splash"
+            android:launchMode="singleTask">
+        </activity>
+        <activity android:name=".HistoryActivity" />
+        <activity android:name=".SessionListActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,361 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/FramePage"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/settings_header_text"
+        style="@style/ActivityHeaderText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/einstellungen" />
+
+    <!-- Main Menu Container -->
+    <LinearLayout
+        android:id="@+id/settings_main_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/button_language_settings"
+            style="@style/MainTextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_language" />
+
+        <TextView
+            android:id="@+id/button_practice_settings"
+            style="@style/MainTextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_practice" />
+
+        <TextView
+            android:id="@+id/button_manage_practices_settings"
+            style="@style/MainTextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/manage_practices" />
+
+        <TextView
+            android:id="@+id/button_system_settings"
+            style="@style/MainTextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_system" />
+        <TextView
+            android:id="@+id/button_goals_settings"
+            style="@style/MainTextButton"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Goals" />
+    </LinearLayout>
+
+    <!-- Language Settings Container -->
+    <LinearLayout
+        android:id="@+id/settings_language_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_language"
+            style="@style/ActivityHeaderText"/>
+
+        <RadioGroup
+            android:id="@+id/langRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/langSystem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="System default" />
+
+            <RadioButton
+                android:id="@+id/langDe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deutsch" />
+
+            <RadioButton
+                android:id="@+id/langEn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="English" />
+        </RadioGroup>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/button_back_language"
+            style="@style/TextLinkButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/back" />
+    </LinearLayout>
+
+    <!-- Practice Settings Container -->
+    <LinearLayout
+        android:id="@+id/settings_practice_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        style="@style/ActivityHeaderText">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/NormalText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/vibrate_on_start_end" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switch_vibration"
+                style="@style/BF.EinkSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/NormalText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/flash_on_start_end" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switch_flash"
+                style="@style/BF.EinkSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!-- Candle feature -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/NormalText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/show_candle_timer" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switch_candle"
+                style="@style/BF.EinkSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!-- DND feature -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/NormalText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/use_dnd_during_meditation" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switch_dnd"
+                style="@style/BF.EinkSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/NormalText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/pre_meditation_countdown_seconds" />
+
+            <EditText
+                android:id="@+id/edit_pre_meditation_countdown"
+                style="@style/DurationInput"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLength="3" />
+
+        </LinearLayout>
+
+
+
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/button_back_practice"
+            style="@style/TextLinkButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/back" />
+    </LinearLayout>
+    <!-- GOALS SUBPAGE CONTAINER (initially hidden) -->
+    <LinearLayout
+        android:id="@+id/goalsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/button_goals_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="← Back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Daily intention (avg minutes)"
+            android:layout_marginTop="16dp" />
+
+        <EditText
+            android:id="@+id/edit_daily_goal_minutes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="60" />
+
+    </LinearLayout>
+    <!-- Manage Practices Container -->
+    <LinearLayout
+        android:id="@+id/settings_manage_practices_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/button_create_practice"
+            style="@style/MainTextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/create_new_practice" />
+
+        <TextView
+            android:id="@+id/button_edit_delete_practice"
+            style="@style/MainTextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_or_delete_practice" />
+
+        <TextView
+            android:id="@+id/button_export_practices"
+            style="@style/MainTextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/export_practices" />
+
+        <TextView
+            android:id="@+id/button_import_practices"
+            style="@style/MainTextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/import_practices" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/button_back_manage_practices"
+            style="@style/TextLinkButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/back" />
+
+    </LinearLayout>
+
+    <!-- System Settings Container -->
+    <LinearLayout
+        android:id="@+id/settings_system_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/button_reset_practices"
+            style="@style/TextLinkButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:text="@string/reset_practices_to_default" />
+
+       <!-- <TextView
+            android:id="@+id/button_edit_vow"
+            style="@style/MainTextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/gel_bde_bearbeiten" /> -->
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/button_back_system"
+            style="@style/TextLinkButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/back" />
+
+    </LinearLayout>
+
+</LinearLayout>

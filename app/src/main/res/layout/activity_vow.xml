@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/FramePage"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/text_vow_title"
+        android:text="@string/dein_gel_bde"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/ActivityHeaderText"
+        />
+
+    <EditText
+        android:id="@+id/edit_vow_text"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@android:color/white"
+        android:gravity="top|start"
+        android:hint="@string/formuliere_hier_dein_gel_bde"
+        android:inputType="textMultiLine"
+        android:padding="8dp"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+    <Button
+        android:id="@+id/button_vow_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/speichern"
+        style="@style/ActionButton" />
+
+    <Button
+        android:id="@+id/button_vow_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+
+        android:text="@string/abbrechen"
+        style="@style/TextLinkButton"/>
+</LinearLayout>

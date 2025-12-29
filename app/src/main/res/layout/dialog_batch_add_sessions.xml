@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Date range (yyyy-mm-dd)"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="6dp">
+
+            <EditText
+                android:id="@+id/editStartDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Start date"
+                android:inputType="text"
+                android:textColor="@android:color/black" />
+
+            <Space
+                android:layout_width="12dp"
+                android:layout_height="1dp" />
+
+            <EditText
+                android:id="@+id/editEndDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="End date"
+                android:inputType="text"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="12dp"
+            android:text="Start time (HH:mm)"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editStartTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="06:00"
+            android:inputType="text"
+            android:textColor="@android:color/black"
+            android:paddingTop="6dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="12dp"
+            android:text="Pattern (one line per block)"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Format: count x minutes [practiceId]\nExamples:\n10 x 25\n2 x 40 ZAZEN\n1 x 10 KINHIN"
+            android:textColor="@android:color/black"
+            android:paddingTop="4dp" />
+
+        <EditText
+            android:id="@+id/editPattern"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:gravity="top"
+            android:hint="10 x 25\n2 x 40 ZAZEN\n..."
+            android:inputType="textMultiLine"
+            android:textColor="@android:color/black"
+            android:paddingTop="6dp" />
+
+    </LinearLayout>
+</ScrollView>

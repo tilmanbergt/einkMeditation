@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<!-- SESSION-BEREICH: während der Meditation -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_session"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:visibility="gone"
+    android:paddingTop="8dp"
+    tools:showIn="@layout/activity_meditation">
+
+    <FrameLayout
+        android:id="@+id/timer_candle_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="24dp">
+
+        <TextView
+            android:id="@+id/text_timer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/time_00_00"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:gravity="center_horizontal"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <ImageView
+            android:id="@+id/image_candle"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_gravity="center"
+            android:src="@drawable/candle"
+            android:contentDescription="@string/app_name"
+            android:visibility="gone"
+            android:clickable="true"
+            android:focusable="true"/>
+    </FrameLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10">
+
+        <TextView
+            android:id="@+id/text_practice_instruction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/instruktion"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+          />
+    </ScrollView>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_pause_continue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/pause"
+            style="@style/ActionButton" />
+
+        <Button
+            android:id="@+id/button_end"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="@string/beenden"
+            style="@style/ActionButton" />
+
+        <Button
+            android:id="@+id/button_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancel"
+            style="@style/ActionButton"
+            android:visibility="gone" />
+    </LinearLayout>
+</LinearLayout>

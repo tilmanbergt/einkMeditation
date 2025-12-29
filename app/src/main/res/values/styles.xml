@@ -1,0 +1,142 @@
+<resources>
+
+    <style name="FramePage">
+        <item name="android:background">@drawable/bg_frame_vintage</item>
+
+        <item name="android:paddingTop">@dimen/frame_padding_top</item>
+        <item name="android:paddingLeft">@dimen/frame_padding_left</item>
+        <item name="android:paddingRight">@dimen/frame_padding_right</item>
+        <item name="android:paddingBottom">@dimen/frame_padding_bottom</item>
+    </style>
+
+    <style name="ActivityHeaderText">
+        <!-- Basis: normales TextView-Widget -->
+        <item name="android:textSize">@dimen/ActivityHeader</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:paddingTop">24dp</item>
+        <item name="android:paddingBottom">16dp</item>
+<item name="android:textStyle">bold</item>
+
+    </style>
+
+
+    <style name="DurationInput">
+        <item name="android:background">@drawable/bg_input_outline</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textColorHint">@android:color/darker_gray</item>
+        <item name="android:paddingLeft">0dp</item>  <!-- Padding kommt aus dem Shape -->
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:inputType">text</item>
+        <item name="android:digits">0123456789,</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="FormInput" parent="DurationInput">
+        <item name="android:inputType">textCapSentences</item>
+        <item name="android:digits">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,.-_ ÖÄÜöäüß</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="FormInputMultiLine" parent="FormInput">
+        <item name="android:inputType">textMultiLine|textCapSentences</item>
+        <item name="android:maxLines">5</item>
+    </style>
+
+    <style name="TextLinkButton" parent="MainTextButton">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <!-- Kein Hintergrund, nur Text -->
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+
+    <style name="SelectionButton" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/quickcheck_button_default</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">0dp</item> <!-- Padding kommt aus dem Shape -->
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+
+    <style name="ActionButton" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/bg_button_outline</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:paddingLeft">0dp</item> <!-- Padding kommt aus dem Shape -->
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+
+    <style name="MainTextButton">
+        <!-- Basis: normales TextView-Widget -->
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textAlignment">center</item>
+
+        <!-- Innenabstand, damit es angenehm „anklickbar“ ist -->
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+
+        <!-- Klickbarkeit & Fokus (für Tastatur/Screenreader) -->
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+
+        <!-- Optional: leichtes Klick-Feedback (Ripple), wenn du magst -->
+        <item name="android:foreground">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+
+    <style name="NormalText" parent="Widget.AppCompat.Button">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textAlignment">textStart</item>
+
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="BigText" parent="Widget.AppCompat.Button">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textAlignment">textStart</item>
+
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="BF.EinkSwitch" parent="Widget.AppCompat.CompoundButton.Switch">
+        <item name="android:thumb">@drawable/bf_switch_thumb</item>
+        <item name="android:track">@drawable/bf_switch_track</item>
+
+        <!-- größer & besser lesbar -->
+        <item name="android:switchMinWidth">72dp</item>
+        <item name="android:switchPadding">6dp</item>
+
+        <!-- Text-Eigenschaften für AN/AUS -->
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+
+
+    <style name="Theme.BodhisattvaFriend.Splash" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Pre-Android 12 style -->
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+
+
+    </style>
+</resources>

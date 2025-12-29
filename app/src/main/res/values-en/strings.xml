@@ -1,0 +1,164 @@
+<resources>
+    <string name="history_label_today">Today</string>
+    <string name="history_label_days">%1$d days</string>
+
+    <string name="history_not_yet">not yet</string>
+    <string name="history_avg_minutes">avg %1$d min</string>
+
+    <string name="history_restart_week_message">Nice! You’re back.</string>
+    <string name="history_restart_month_message">Welcome back.</string>
+
+    <string name="history_first_day_short">Great start.</string>
+
+    <string name="history_suggest_daily">+%1$d min today to reach your daily target.</string>
+    <string name="history_suggest_daily_keep_momentum">+%1$d min today to keep the momentum.</string>
+    <string name="history_suggest_weekly">+%1$d min today to improve your weekly average.</string>
+    <string name="history_suggest_monthly">+%1$d min today to improve your monthly average.</string>
+    <string name="history_suggest_adapt_goal">Adjust goal</string>
+    <string name="history_suggest_wash_bowls">You’re on top of things — go wash your bowls.</string>
+
+    <string name="history_headline_start">Good to have you here.</string>
+    <string name="history_headline_start_2">Even 5 minutes count.</string>
+    <string name="history_suggest_start">+%1$d min today — just sit down.</string>
+    <string name="history_streak_continue_today">Streak: %1$d days — continue today!</string>
+
+    <string name="history_headline_today_done">Done for today.</string>
+    <string name="history_headline_today_good_start">Good start today.</string>
+    <string name="history_headline_week_on_track">Your week is on track.</string>
+    <string name="history_headline_month_on_track">Your month is on track.</string>
+    <string name="history_headline_month_on_fire">More than on track (month).</string>
+    <string name="history_headline_continue_today">Continue today.</string>
+    <string name="history_headline_restart">Strong restart.</string>
+    <string name="history_headline_streak_milestone">Strong streak!</string>
+    <string name="history_headline_generic">Keep going.</string>
+
+    <string name="history_streak_days">Streak: %1$d days</string>
+    <string name="history_streak_start">Start a new streak.</string>
+    <string name="history_streak_start_best">Start a new streak. Best: %1$d days</string>
+
+
+
+    <string name="app_name">Bodhisattva Friend</string>
+<string name="ziel">Goal</string>
+    <string name="noch_nicht">not yet</string>
+
+    <string name="tag">day</string>
+
+    <string name="vorschlag_heute">Suggested today</string>
+    <string name="erster_tag_verlauf">First day recorded – well done!</string>
+    <!-- History Screen -->
+    <string name="history_title">Thank you for practicing.</string>
+    <string name="history_message">
+        Here you see a short summary of your recent sessions.
+    </string>
+    <string name="history_button_list">Show history</string>
+    <string name="history_button_export">Export data</string>
+    <string name="noch_keine_sitzungen_gespeichert">No sessions stored yet.</string>
+    <string name="praxis_bersicht">Practice overview</string>
+    <string name="danke_dass_du_bst">Thank you for practicing!</string>
+    <string name="zeige_letzte_praxen">Show recent practices</string>
+    <string name="home">Home</string>
+    <string name="bodhisattva_friend">Bodhisattva Friend</string>
+    <string name="quick_check_starten">Start Quick Check</string>
+    <string name="meditation_w_hlen">Choose meditation</string>
+    <string name="verlauf_anschauen">View history</string>
+    <string name="praxisname">Practice name</string>
+    <string name="meditation_waehlen">Choose meditation</string>
+    <string name="check_in">Check-in</string>
+    <string name="letzte_sessions">Recent sessions</string>
+    <string name="csv_exportieren">Export CSV</string>
+    <string name="dein_gel_bde">Your vow</string>
+    <string name="formuliere_hier_dein_gel_bde">Formulate your vow here...</string>
+    <string name="speichern">Save</string>
+    <string name="abbrechen">Cancel</string>
+    <string name="practice">Practice</string>
+    <string name="wie_erlebst_du_dich_innerlich">How do you feel inside?</string>
+    <string name="neugierig_offen">Curious / Open</string>
+    <string name="ersch_pft_berfordert">Exhausted / Overwhelmed</string>
+    <string name="etwas_gestresst">A bit stressed</string>
+    <string name="stark_getriggert">Strongly triggered</string>
+    <string name="pause_guide">Pause for a moment.\n\nFeel 2–3 breaths before you continue. \n\nHow is your energy right now?</string>
+    <string name="ask_for_time">How much time do you really have now?</string>
+    <string name="kurz_1_4_min">Short (1–4 min)</string>
+    <string name="medium_time">Medium (5–24 min)</string>
+    <string name="long_time">Long (25+ min)</string>
+    <string name="time_00_00">00:00</string>
+    <string name="instruktion">Instruction</string>
+    <string name="pause">Pause</string>
+    <string name="beenden">End</string>
+    <string name="andere_praxis_w_hlen">Choose another practice</string>
+    <string name="kurzbeschreibung">Short description</string>
+    <string name="_5_min">5 min</string>
+    <string name="_10_min">10 min</string>
+    <string name="eigene_dauer">Custom duration:</string>
+    <string name="eigene_dauer_minuten">Custom duration (minutes)</string>
+    <string name="audio_abspielen">Play audio?</string>
+    <string name="start">Start</string>
+    <string name="ignore_overtime">Ignore overtime</string>
+    <string name="nicht_speichern">Do not save</string>
+    <string name="gel_bde_bearbeiten">Edit vow</string>
+    <string name="no_data_to_export">No data to export or error while saving.</string>
+    <string name="csv_gespeichert_unter">CSV saved to:\n</string>
+    <string name="letzte_sitzungen_max_10">Last sessions (max. 10):\n</string>
+    <string name="date_format_export_file">yyyy-MM-dd</string>
+    <string name="time_format_export_file">HH:mm</string>
+    <string name="minutes_abbreviated">min</string>
+    <string name="no_practices_found">No practices found (IDs do not match repository).</string>
+    <string name="keine_praxen_definiert">No practices defined.</string>
+    <string name="fertig">Done</string>
+    <string name="weiter">Next</string>
+    <string name="letzte_7_tage">"Last 7 days"</string>
+    <string name="minuten">"Minutes"</string>
+    <string name="average_symbol">Ø</string>
+    <string name="letzte">Last</string>
+    <string name="tage">" days"</string>
+    <string name="tage_in_folge">"Days in a row: "</string>
+    <string name="fang_eine_neue_folge_an">Start a new streak!</string>
+    <string name="heute_noch_nicht">" (not yet today)"</string>
+    <string name="sitzungen_heute">Sessions today</string>
+    <string name="einstellungen">Settings</string>
+    <string name="vibrate_on_start_end">Vibrate on start/end</string>
+    <string name="flash_on_start_end">Flash on start/end</string>
+    <string name="pre_meditation_countdown_seconds">Pre-meditation countdown (seconds)</string>
+    <string name="cancel">Cancel</string>
+    <string name="reset_practices_to_default">Reset practices to default</string>
+    <string name="reset_practices_dialog_message">Are you sure you want to delete all your custom practices and reset to the default set?</string>
+    <string name="practices_reset_toast">Practices reset to default</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_practice">Practice</string>
+    <string name="settings_system">System</string>
+    <string name="back">Back</string>
+    <string name="manage_practices">Manage Practices</string>
+    <string name="create_new_practice">Create new practice</string>
+    <string name="add_practice_name_hint">Name</string>
+    <string name="add_practice_description_hint">Short Description</string>
+    <string name="add_practice_instruction_hint">Instruction Text</string>
+    <string name="add_practice_durations_hint">Default Durations (e.g., 5,10,15)</string>
+    <string name="edit_or_delete_practice">Edit or Delete a Practice</string>
+    <string name="delete">Delete</string>
+    <string name="edit_practice_header">Edit Practice</string>
+    <string name="toast_fill_out_all_fields">Please fill out all fields</string>
+    <string name="toast_invalid_duration_format">Invalid format for durations</string>
+    <string name="toast_practice_updated">Practice updated</string>
+    <string name="toast_practice_saved">Practice saved</string>
+    <string name="dialog_delete_practice_title">Delete Practice</string>
+    <string name="dialog_delete_practice_message">Are you sure you want to delete this practice?</string>
+    <string name="toast_practice_deleted">Practice deleted</string>
+    <string name="previous_page">Previous</string>
+    <string name="export_practices">Export Practices</string>
+    <string name="select_practices_to_export">Select practices to export</string>
+    <string name="export">Export</string>
+    <string name="import_practices">Import Practices</string>
+    <string name="import_conflict_title">Duplicate Practices Found</string>
+    <string name="import_conflict_message">The selected file contains practices that already exist. How do you want to handle these duplicates?</string>
+    <string name="overwrite_all">Overwrite All</string>
+    <string name="skip_all">Skip All</string>
+    <string name="import_successful">Practices imported successfully.</string>
+    <string name="import_failed">Import failed. Please check the file format.</string>
+    <string name="select_file">Select File</string>
+    <string name="show_candle_timer">Candle as Timer</string>
+    <string name="use_dnd_during_meditation">Do not disturb during meditation</string>
+    <string name="dnd_permission_needed">Dot Disturb Permission Needed</string>
+    <string name="beste_serie">Beste Serie</string>
+    <string name="starte_mit_5_minuten_nur_hinsetzen_z_hlt_schon">Starte mit 5 Minuten. Nur hinsetzen zählt schon.</string>
+</resources>

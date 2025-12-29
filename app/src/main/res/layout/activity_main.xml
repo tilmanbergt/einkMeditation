@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    style="@style/FramePage">
+
+    <TextView
+        android:id="@+id/text_app_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/bodhisattva_friend"
+        style="@style/ActivityHeaderText"
+
+      />
+
+    <TextView
+        android:id="@+id/button_quick_check"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/MainTextButton"
+        android:text="@string/quick_check_starten" />
+
+    <TextView
+        android:id="@+id/button_choose_meditation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/MainTextButton"
+        android:text="@string/meditation_w_hlen"
+        />
+
+    <TextView
+        android:id="@+id/button_history"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/MainTextButton"
+        android:text="@string/verlauf_anschauen"
+       />
+    <TextView
+        android:id="@+id/button_settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/MainTextButton"
+        android:text="@string/einstellungen"
+        />
+
+
+</LinearLayout>

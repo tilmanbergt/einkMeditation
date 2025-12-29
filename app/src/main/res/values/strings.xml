@@ -1,0 +1,166 @@
+<resources>
+    <string name="history_label_today">Heute</string>
+    <string name="history_label_days">%1$d Tage</string>
+
+    <string name="history_not_yet">noch nicht</string>
+    <string name="history_avg_minutes">⌀ %1$d Minuten</string>
+
+    <string name="history_restart_week_message">Super! Du bist wieder da.</string>
+    <string name="history_restart_month_message">Willkommen zurück.</string>
+
+    <string name="history_first_day_short">Guter Start.</string>
+
+    <string name="history_suggest_daily">+%1$d Min heute, um das Tagesziel zu erreichen.</string>
+    <string name="history_suggest_daily_keep_momentum">+%1$d Min heute, um den Schwung zu halten.</string>
+    <string name="history_suggest_weekly">+%1$d Min heute, um den Wochen-Schnitt zu verbessern.</string>
+    <string name="history_suggest_monthly">+%1$d Min heute, um den Monats-Schnitt zu verbessern.</string>
+    <string name="history_suggest_adapt_goal">Ziel anpassen</string>
+    <string name="history_suggest_wash_bowls">Du bist on top of things – geh deine Schalen waschen.</string>
+
+    <string name="history_headline_start">Schön, dass du da bist.</string>
+    <string name="history_headline_start_2">Schon 5 Minuten zählen.</string>
+    <string name="history_suggest_start">+%1$d Min heute – nur hinsetzen.</string>
+
+    <string name="history_headline_today_done">Heute geschafft.</string>
+    <string name="history_headline_today_good_start">Guter Start heute.</string>
+    <string name="history_headline_week_on_track">Du bist diese Woche stark unterwegs.</string>
+    <string name="history_headline_month_on_track">Du bist diesen Monat gut im Rhythmus.</string>
+    <string name="history_headline_month_on_fire">Du bist mehr als auf Kurs (Monat).</string>
+    <string name="history_headline_continue_today">Mach heute weiter.</string>
+    <string name="history_headline_restart">Starker Neustart.</string>
+    <string name="history_headline_streak_milestone">Starke Serie!</string>
+    <string name="history_headline_generic">Weiter so.</string>
+
+    <string name="history_streak_days">Serie: %1$d Tage</string>
+    <string name="history_streak_start">Starte eine neue Serie.</string>
+    <string name="history_streak_start_best">Starte eine neue Serie. Beste: %1$d Tage</string>
+
+
+    <string name="history_streak_continue_today">Serie: %1$d Tage – mach heute weiter!</string>
+
+    <string name="app_name">Bodhisattva Friend</string>
+
+    <string name="noch_nicht">noch nicht</string>
+    <string name="ziel">Ziel</string>
+    <string name="tag">Tag</string>
+
+    <string name="vorschlag_heute">Vorschlag heute</string>
+    <string name="erster_tag_verlauf">Erster Tag im Verlauf – weiter so!</string>
+    <string name="beste_serie">Beste Serie</string>
+
+    <!-- History Screen -->
+    <string name="history_title">Danke, dass du geübt hast.</string>
+    <string name="history_message">
+        Hier siehst du eine kleine Zusammenfassung deiner letzten Sitzungen.
+    </string>
+    <string name="history_button_list">Verlauf anzeigen</string>
+    <string name="history_button_export">Daten exportieren</string>
+    <string name="noch_keine_sitzungen_gespeichert">Noch keine Sitzungen gespeichert.</string>
+    <string name="praxis_bersicht">Praxisübersicht</string>
+    <string name="danke_dass_du_bst">Danke, dass du übst!</string>
+    <string name="zeige_letzte_praxen">Zeige letzte Praxen</string>
+    <string name="home">Home</string>
+    <string name="bodhisattva_friend">Bodhisattva Friend</string>
+    <string name="quick_check_starten">Quick-Check starten</string>
+    <string name="meditation_w_hlen">Meditation wählen</string>
+    <string name="verlauf_anschauen">Verlauf anschauen</string>
+    <string name="praxisname">Praxisname</string>
+    <string name="meditation_waehlen">Meditation wählen</string>
+    <string name="check_in">Check-in</string>
+    <string name="letzte_sessions">Letzte Sessions</string>
+    <string name="csv_exportieren">CSV exportieren</string>
+    <string name="dein_gel_bde">Dein Gelübde</string>
+    <string name="formuliere_hier_dein_gel_bde">Formuliere hier dein Gelübde...</string>
+    <string name="speichern">Speichern</string>
+    <string name="abbrechen">Abbrechen</string>
+    <string name="practice">Practice</string>
+    <string name="wie_erlebst_du_dich_innerlich">Wie erlebst du dich innerlich?</string>
+    <string name="neugierig_offen">Neugierig Offen</string>
+    <string name="ersch_pft_berfordert">Erschöpft Überfordert</string>
+    <string name="etwas_gestresst">Etwas gestresst</string>
+    <string name="stark_getriggert">Stark getriggert</string>
+    <string name="pause_guide">Halte kurz inne.\n\nSpüre 2–3 Atemzüge, bevor du weitergehst. \n\nWie ist deine Energie gerade?</string>
+    <string name="ask_for_time">Wie viel Zeit hast du jetzt wirklich?</string>
+    <string name="kurz_1_4_min">Kurz (1–4 Min)</string>
+    <string name="medium_time">Mittel (5–24 Min)</string>
+    <string name="long_time">Lang (25+ Min)</string>
+    <string name="time_00_00">00:00</string>
+    <string name="instruktion">Instruktion</string>
+    <string name="pause">Pause</string>
+    <string name="beenden">Beenden</string>
+    <string name="andere_praxis_w_hlen">Andere Praxis wählen</string>
+    <string name="kurzbeschreibung">Kurzbeschreibung</string>
+    <string name="_5_min">5 min</string>
+    <string name="_10_min">10 min</string>
+    <string name="eigene_dauer">Eigene Dauer:</string>
+    <string name="eigene_dauer_minuten">Eigene Dauer (Minuten)</string>
+    <string name="audio_abspielen">Audio abspielen?</string>
+    <string name="start">Start</string>
+    <string name="ignore_overtime">Verlängerung ignorieren</string>
+    <string name="nicht_speichern">Nicht speichern</string>
+    <string name="gel_bde_bearbeiten">Gelübde bearbeiten</string>
+    <string name="no_data_to_export">Keine Daten zum Export oder Fehler beim Speichern.</string>
+    <string name="csv_gespeichert_unter">CSV gespeichert unter:\n</string>
+    <string name="letzte_sitzungen_max_10">Letzte Sitzungen (max. 10):\n</string>
+    <string name="date_format_export_file">yyyy-MM-dd</string>
+    <string name="time_format_export_file">HH:mm</string>
+    <string name="minutes_abbreviated">min</string>
+    <string name="no_practices_found">Keine Praxen gefunden (IDs passen nicht zu Repository).</string>
+    <string name="keine_praxen_definiert">Keine Praxen definiert.</string>
+    <string name="fertig">Fertig</string>
+    <string name="weiter">Weiter</string>
+    <string name="letzte_7_tage">"Letzte 7 Tage"</string>
+    <string name="minuten">"Minuten"</string>
+    <string name="average_symbol">Ø</string>
+    <string name="letzte">Letzte</string>
+    <string name="tage">" Tage"</string>
+    <string name="tage_in_folge">"Tage in Folge: "</string>
+    <string name="fang_eine_neue_folge_an">Fang eine neue Folge an!</string>
+    <string name="heute_noch_nicht">" (heute noch nicht)"</string>
+    <string name="sitzungen_heute">Sitzungen heute</string>
+    <string name="einstellungen">Einstellungen</string>
+    <string name="vibrate_on_start_end">Bei Start/Ende vibrieren</string>
+    <string name="flash_on_start_end">Bei Start/Ende blinken</string>
+    <string name="pre_meditation_countdown_seconds">Countdown vor der Meditation (Sekunden)</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="reset_practices_to_default">Praxen auf Standard zurücksetzen</string>
+    <string name="reset_practices_dialog_message">Bist du sicher, dass du alle deine eigenen Praxen löschen und auf die Standardeinstellungen zurücksetzen möchtest?</string>
+    <string name="practices_reset_toast">Praxen auf Standard zurückgesetzt</string>
+    <string name="settings_language">Sprache</string>
+    <string name="settings_practice">Praxis</string>
+    <string name="settings_system">System</string>
+    <string name="back">Zurück</string>
+    <string name="manage_practices">Praxen verwalten</string>
+    <string name="create_new_practice">Neue Praxis erstellen</string>
+    <string name="add_practice_name_hint">Name</string>
+    <string name="add_practice_description_hint">Kurzbeschreibung</string>
+    <string name="add_practice_instruction_hint">Instruktionstext</string>
+    <string name="add_practice_durations_hint">Standarddauern (z.B. 5,10,15)</string>
+    <string name="edit_or_delete_practice">Praxis bearbeiten oder löschen</string>
+    <string name="delete">Löschen</string>
+    <string name="edit_practice_header">Praxis bearbeiten</string>
+    <string name="toast_fill_out_all_fields">Bitte fülle alle Felder aus</string>
+    <string name="toast_invalid_duration_format">Ungültiges Format für die Dauer</string>
+    <string name="toast_practice_updated">Praxis aktualisiert</string>
+    <string name="toast_practice_saved">Praxis gespeichert</string>
+    <string name="dialog_delete_practice_title">Praxis löschen</string>
+    <string name="dialog_delete_practice_message">Bist du sicher, dass du diese Praxis löschen möchtest?</string>
+    <string name="toast_practice_deleted">Praxis gelöscht</string>
+    <string name="previous_page">Zurück</string>
+    <string name="export_practices">Praxen exportieren</string>
+    <string name="select_practices_to_export">Praxen zum Exportieren auswählen</string>
+    <string name="export">Exportieren</string>
+    <string name="import_practices">Praxen importieren</string>
+    <string name="import_conflict_title">Doppelte Praxen gefunden</string>
+    <string name="import_conflict_message">Die ausgewählte Datei enthält Praxen, die bereits existieren. Wie möchtest du mit diesen Duplikaten umgehen?</string>
+    <string name="overwrite_all">Alle überschreiben</string>
+    <string name="skip_all">Alle überspringen</string>
+    <string name="import_successful">Praxen erfolgreich importiert.</string>
+    <string name="import_failed">Import fehlgeschlagen. Bitte überprüfe das Dateiformat.</string>
+    <string name="select_file">Datei auswählen</string>
+    <string name="show_candle_timer">Teelicht statt Timer</string>
+    <string name="use_dnd_during_meditation">Nicht stören während Meditation</string>
+    <string name="dnd_permission_needed">Nicht stören Erlaubnis benötigt</string>
+    <string name="starte_mit_5_minuten_nur_hinsetzen_z_hlt_schon">Starte mit 5 Minuten. Nur hinsetzen zählt schon.</string>
+
+</resources>

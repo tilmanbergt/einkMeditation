@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    tools:showIn="@layout/activity_quick_check" android:layout_height="match_parent" android:layout_width="match_parent"
+    android:id="@+id/layout_qc_state">
+
+
+    <!-- FRAGE 1: innerer Zustand -->
+    <TextView
+        android:id="@+id/text_question_inner_condition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wie_erlebst_du_dich_innerlich"
+        style="@style/NormalText" />
+
+    <!-- Erste Zeile: neugierig/offen + erschöpft/überfordert -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="4dp">
+
+
+        <TextView
+            android:id="@+id/text_inner_curious_open"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/neugierig_offen"
+            style="@style/SelectionButton" />
+
+        <TextView
+            android:id="@+id/text_inner_exhausted"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/ersch_pft_berfordert"
+            style="@style/SelectionButton" />
+
+
+    </LinearLayout>
+
+    <!-- Zweite Zeile: etwas gestresst + stark getriggert -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:id="@+id/text_inner_somewhat_stressed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/etwas_gestresst"
+            style="@style/SelectionButton" />
+
+        <TextView
+            android:id="@+id/text_inner_strongly_triggered"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/stark_getriggert"
+            style="@style/SelectionButton" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

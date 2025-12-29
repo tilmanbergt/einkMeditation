@@ -1,0 +1,144 @@
+{"meta": {
+  "fallbackPracticeId": "MICROPAUSE",
+  "manualSelectionSetId": "MANUAL_SELECTION"
+},
+  "practiceSets": [
+    {
+      "id": "MANUAL_SELECTION",
+      "label": "Alle Übungen",
+      "practiceIds": [
+        "CALMING",
+        "PROCESS",
+        "MICROPAUSE",
+        "INSIGHT",
+        "ZAZEN",
+        "SMILE"
+      ]
+    }
+  ],
+  "practices": [
+    {
+      "id": "SMILE",
+      "name": "Smile",
+      "shortDescription": "Geführte Meditaiton",
+      "instructionText": "",
+      "defaultDurationsMinutes": [19, 25],
+      "allowedTimeFrames": ["LONG", "MEDIUM"],
+      "allowedInnerStates": [
+        "EXHAUSTED_OVERWHELMED",
+        "SOMEWHAT_STRESSED",
+        "STRONGLY_TRIGGERED"
+      ],
+      "audio": {
+        "type": "GUIDED",
+        "resourceKey": "gm_tara_brach_smile",
+        "description": "Geführte Meditation von Tara Brach.",
+        "loopMode": "ONCE",
+        "minDurationMinutes": 19
+      }
+    },
+    {
+      "id": "OUTSIDE_WALKING",
+      "name": "Schlendern",
+      "shortDescription": "Gehe nach draußen und geh für eine definierte Zeit spazieren. Fokussiere dich auf die Schritte und den Atem",
+      "instructionText": "",
+      "defaultDurationsMinutes": [15, 30],
+      "allowedTimeFrames": ["LONG", "MEDIUM"],
+      "allowedInnerStates": [
+        "EXHAUSTED_OVERWHELMED",
+        "SOMEWHAT_STRESSED",
+        "STRONGLY_TRIGGERED"
+      ]
+    },  {
+      "id": "KINHIN",
+      "name": "Kinhin",
+      "shortDescription": "Mach eine kurze Gehmeditation",
+      "instructionText": "Mach bei jedem vollem Atemzug einen Schritt.",
+      "defaultDurationsMinutes": [3, 7],
+      "allowedTimeFrames": ["SHORT"],
+      "allowedInnerStates": [
+        "EXHAUSTED_OVERWHELMED",
+        "SOMEWHAT_STRESSED"
+      ]
+    },
+    {
+      "id": "CALMING",
+      "name": "Ankern",
+      "shortDescription": "Zustände des Nervensystems bewusst wahrnehmen und einen ventralen Anker finden.",
+      "instructionText": "Setze dich bequem hin.\nSpüre deinen Körper.\nBenenne innerlich deinen Zustand: ventral, sympathisch oder dorsal.\nLass den Atem kommen und gehen.\nVersuche nicht, etwas sofort zu ändern.\nBleibe Zeuge des Zustands, so gut du kannst.",
+      "defaultDurationsMinutes": [5, 10],
+      "allowedTimeFrames": ["SHORT", "MEDIUM"],
+      "allowedInnerStates": [
+        "EXHAUSTED_OVERWHELMED",
+        "SOMEWHAT_STRESSED",
+        "STRONGLY_TRIGGERED"
+      ]
+    },
+    {
+      "id": "REST",
+      "name": "Ausruhen",
+      "shortDescription": "Einfach mal schlafen legen.",
+      "instructionText": "Du bist total müde: leg dich einfach mal 25 Minuten hin.",
+      "defaultDurationsMinutes": [25,40],
+      "allowedTimeFrames": ["LONG"],
+      "allowedInnerStates": [
+        "EXHAUSTED_OVERWHELMED"
+      ]
+    },
+    {
+      "id": "PROCESS",
+      "name": "Bedürfnisse",
+      "shortDescription": "Körper, Bedürfnis, Weltbild und Ich-Konstruktion erforschen.",
+      "instructionText": "Schließe die Augen.\n1) Spüre Körper und Gefühle.\n2) Rate deine Bedürfnisse und prüfe, was stimmig ist.\n3) Beobachte, wie dieses Bedürfnis deine Sicht auf dich und die Welt färbt.\n4) Erkenne, dass sowohl Bedürfnis als auch Weltbild Konstruktionen sind, die entstehen und vergehen.",
+      "defaultDurationsMinutes": [10, 20],
+      "allowedTimeFrames": ["MEDIUM", "LONG"],
+      "allowedInnerStates": [
+        "CURIOUS_OPEN",
+        "SOMEWHAT_STRESSED"
+      ]
+    },
+    {
+      "id": "MICROPAUSE",
+      "name": "Mikropause",
+      "shortDescription": "Halte kurzu inne, Spüre deinen Atem, Verbinde dich mit Lächeln/Wärme/Sonne.",
+      "instructionText": "Nimm einen bewussten Atemzug. \nWas spüre ich im Körper?\nRufe dir ein Lächeln vor Augen.\nSpüre Wärme.\nStell dir vor in der Sonne zu stehen.",
+      "defaultDurationsMinutes": [1, 3],
+      "allowedTimeFrames": ["SHORT"],
+      "allowedInnerStates": [
+        "CURIOUS_OPEN",
+        "EXHAUSTED_OVERWHELMED",
+        "SOMEWHAT_STRESSED",
+        "STRONGLY_TRIGGERED"
+      ],  "audio": {
+      "type": "AMBIENT",
+      "resourceKey": "am_birds",
+      "description": "Vögelgeräusche.",
+      "loopMode": "LOOP",
+      "minDurationMinutes": 0
+    }
+    },
+    {
+      "id": "INSIGHT",
+      "name": "Einsicht",
+      "shortDescription": "Mithilfe der Archetypen nicht-Dualität einüben.",
+      "instructionText": "Lover: Zähle den Atem und erfreue dich daran.\nKrieger: Schaue den Hindernissen ins Gesicht und erkenne die Dualität, die dahintersteht.\nMagier: Lass deine fixe Position los und nimm andere Perspektiven ein.\nSouverän: Sei mit allem präsent und widme die Praxis dem Wohlergehen aller Wesen.",
+      "defaultDurationsMinutes": [10, 20],
+      "allowedTimeFrames": ["MEDIUM", "LONG"],
+      "allowedInnerStates": [
+        "CURIOUS_OPEN"
+      ]
+    },
+    {
+      "id": "ZAZEN",
+      "name": "Zazen",
+      "shortDescription": "Einfach nur Sitzen.",
+      "instructionText": "",
+      "defaultDurationsMinutes": [30, 45],
+      "allowedTimeFrames": ["LONG"],
+      "allowedInnerStates": [
+        "CURIOUS_OPEN",
+        "EXHAUSTED_OVERWHELMED"
+      ]
+    }
+  ]
+}

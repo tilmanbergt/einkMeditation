@@ -1,0 +1,39 @@
+{
+  "meta": {
+    "fallbackPracticeId": "MEDITATION",
+    "manualSelectionSetId": "MANUAL_SELECTION"
+  },
+  "practiceSets": [
+    {
+      "id": "MANUAL_SELECTION",
+      "label": {
+        "de": "Alle Übungen"
+      },
+      "practiceIds": [
+        "MEDITATION"
+      ]
+    }
+  ],
+  "practices": [
+    {
+      "id": "MEDITATION",
+      "name": {
+        "de": "Meditation",
+        "en": "Meditation"
+      },
+      "shortDescription": {
+        "de": "Meditate",
+        "en": "Meditate"
+      },
+      "instructionText": {
+        "de": "",
+        "en": ""
+      },
+      "defaultDurationsMinutes": [
+        10,20,
+        30,
+        45, 60
+      ]
+    }
+  ]
+}
