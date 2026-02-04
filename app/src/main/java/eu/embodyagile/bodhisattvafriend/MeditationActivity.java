@@ -45,6 +45,10 @@ public class MeditationActivity extends BaseActivity {
     private boolean playAudio = false;
     private FeedbackHelper feedbackHelper;
 
+//for dimming during meditation.
+    private Float previousWindowBrightness = null;
+    private boolean keepScreenOnWasSet = false;
+
     public static final String EXTRA_PRACTICE_ID = "extra_practice_id";
 
     public static final String EXTRA_PRE_TIME = "extra_pre_time";
@@ -263,7 +267,7 @@ private GridLayout durationButtonsLayout;
         uiHandler.removeCallbacksAndMessages(null);
 
         stopPracticeAudio();
-
+        setMeditationDarkMode(false);
     }
 
     //endregion
@@ -728,6 +732,7 @@ return last;
         endSessionCleanup();   // <-- ADD THIS (missing today) :contentReference[oaicite:3]{index=3}
 
         signalStartEnd(); // Klang beim vorzeitigen Beenden
+        setMeditationDarkMode(false);
         allowOvertime = false;
         releaseAudioPlayer();
         openSummaryScreen();
@@ -771,6 +776,7 @@ return last;
     @Override
     protected void onStop() {
         restoreDndIfChanged();
+        setMeditationDarkMode(false);
         super.onStop();
     }
     private void startMeditation() {
@@ -810,7 +816,7 @@ return last;
         if (signalStart) {
             signalStartEnd();
         }
-
+        setMeditationDarkMode(true);
         if (useDndDuringSession) {
             if (!hasDndAccess()) {
                 openDndAccessSettings();
@@ -841,7 +847,7 @@ return last;
                 timerView.setText(getString(R.string.fertig));
                 endSessionCleanup();   // <-- ADD THIS
                 signalStartEnd(); // Klang am natürlichen Ende
-
+                setMeditationDarkMode(false);
                 allowOvertime = true;
                 openSummaryScreen();
             }
@@ -1014,6 +1020,38 @@ return last;
 
 
 // region Shared Methods
+
+    private void setMeditationDarkMode(boolean dark) {
+        // 1) Window brightness (0..1, or -1 for system default)
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+
+        if (dark) {
+            if (previousWindowBrightness == null) {
+                previousWindowBrightness = lp.screenBrightness; // may be -1
+            }
+            lp.screenBrightness = 0.0f; // minimum
+            getWindow().setAttributes(lp);
+
+            // 2) Allow normal sleep (optional)
+            keepScreenOnWasSet = true;
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        } else {
+            if (previousWindowBrightness != null) {
+                lp.screenBrightness = previousWindowBrightness;
+                getWindow().setAttributes(lp);
+                previousWindowBrightness = null;
+            } else {
+                lp.screenBrightness = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE; // system default
+                getWindow().setAttributes(lp);
+            }
+
+            if (keepScreenOnWasSet) {
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                keepScreenOnWasSet = false;
+            }
+        }
+    }
+
 
     private void switchMode(Mode newMode) {
         if (setupContainer != null) {
