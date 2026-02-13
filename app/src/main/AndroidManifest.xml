@@ -18,11 +18,20 @@
         <activity android:name=".AddPracticeActivity" />
         <activity android:name=".EditDeletePracticeActivity" />
         <activity android:name=".MeditationActivity"
-            android:exported="true" android:clearTaskOnLaunch="true">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".MeditationSetupActivity"
+            android:exported="true"
+            android:clearTaskOnLaunch="true"
+            >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
         </activity>
         <activity android:name=".MeditationSelectionActivity" />
         <activity android:name=".VowActivity" />

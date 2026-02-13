@@ -3,15 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingTop="6dp"
-    android:paddingBottom="6dp">
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp">
 
     <TextView
         android:id="@+id/row_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1.4"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:textColor="@android:color/black"
         android:text="Dec 29" />
 
@@ -20,7 +20,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1.0"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:textColor="@android:color/black"
         android:text="06:00" />
 
@@ -29,7 +29,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1.1"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:textColor="@android:color/black"
         android:text="ZAZEN" />
 
@@ -37,9 +37,9 @@
         android:id="@+id/row_minutes"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.8"
+        android:layout_weight="1"
         android:textAlignment="viewEnd"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:textColor="@android:color/black"
         android:text="25 min" />
 

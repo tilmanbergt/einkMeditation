@@ -3,6 +3,9 @@ package eu.embodyagile.bodhisattvafriend.settings;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import eu.embodyagile.bodhisattvafriend.MeditationActivity;
+import eu.embodyagile.bodhisattvafriend.MeditationSetupActivity;
+
 public final class AppSettings {
 
     private AppSettings() {}
@@ -10,9 +13,13 @@ public final class AppSettings {
     // ✅ single source of truth
     public static final String PREFS_NAME = "bodhisattva_friend_prefs";
 
+    public static final String KEY_DIM_DURING_MEDITATION = "dim_during_meditation";
 
     // --- Keys ---
     public static final String KEY_DAILY_GOAL_MINUTES = "daily_goal_avg_minutes";
+
+    public static final String KEY_LONG_TERM_GOAL_MINUTES = "long_term_goal_minutes";
+
     public static final String KEY_PRE_MEDITATION_COUNTDOWN = "pre_meditation_countdown";
 
     public static final String KEY_DND_ENABLED = "dnd_enabled";
@@ -24,8 +31,10 @@ public final class AppSettings {
 
     // --- Defaults / bounds ---
     private static final int DEFAULT_DAILY_GOAL_MINUTES = 60;
-    private static final int MIN_DAILY_GOAL_MINUTES = 5;
-    private static final int MAX_DAILY_GOAL_MINUTES = 180;
+    public static final int DEFAULT_LONG_TERM_GOAL_MINUTES = DEFAULT_DAILY_GOAL_MINUTES;
+
+    public static final int MIN_DAILY_GOAL_MINUTES = 5;
+    public static final int MAX_DAILY_GOAL_MINUTES = 500;
 
     private static final int DEFAULT_PRE_MEDITATION_COUNTDOWN = 0; // seconds
     private static final int MIN_PRE_MEDITATION_COUNTDOWN = 0;
@@ -106,6 +115,15 @@ public final class AppSettings {
         prefs(c).edit().putBoolean(KEY_VIBRATION_ON_START_END, enabled).apply();
     }
 
+    public static boolean isDimDuringMeditationEnabled(Context ctx) {
+        // default true (recommended) or false — your call
+        return getPrefs(ctx).getBoolean(KEY_DIM_DURING_MEDITATION, true);
+    }
+
+    public static void setDimDuringMeditationEnabled(Context ctx, boolean enabled) {
+        getPrefs(ctx).edit().putBoolean(KEY_DIM_DURING_MEDITATION, enabled).apply();
+    }
+
     // ---------------------------
     // Last-used duration per practice
     // ---------------------------
@@ -127,5 +145,22 @@ public final class AppSettings {
         if (v < min) return min;
         if (v > max) return max;
         return v;
+    }
+
+
+
+
+    public static int getLongTermGoalMinutes(Context c) {
+        int v = prefs(c).getInt(KEY_LONG_TERM_GOAL_MINUTES, DEFAULT_LONG_TERM_GOAL_MINUTES);
+        return clamp(v, MIN_DAILY_GOAL_MINUTES, MAX_DAILY_GOAL_MINUTES);
+    }
+
+    public static void setLongTermGoalMinutes(Context c, int minutes) {
+        int v = clamp(minutes, MIN_DAILY_GOAL_MINUTES, MAX_DAILY_GOAL_MINUTES);
+        prefs(c).edit().putInt(KEY_LONG_TERM_GOAL_MINUTES, v).apply();
+    }
+
+    public static boolean isMeditationSetupSuggestionModeDefault(MeditationSetupActivity meditationSetupActivity) {
+    return true;
     }
 }

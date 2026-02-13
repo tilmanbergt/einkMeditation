@@ -1,0 +1,48 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/settings_main_menu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:visibility="visible">
+
+    <TextView
+        android:id="@+id/button_language_settings"
+        style="@style/MainTextButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_language" />
+
+    <TextView
+        android:id="@+id/button_practice_settings"
+        style="@style/MainTextButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_practice" />
+
+    <TextView
+        android:id="@+id/button_manage_practices_settings"
+        style="@style/MainTextButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/manage_practices" />
+
+    <TextView
+        android:id="@+id/button_system_settings"
+        style="@style/MainTextButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_system" />
+
+    <TextView
+        android:id="@+id/button_goals_settings"
+        style="@style/MainTextButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Goals" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>

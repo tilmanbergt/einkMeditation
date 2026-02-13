@@ -120,11 +120,7 @@ public class MeditationSelectionActivity extends BaseActivity {
 
     private void openMeditation(Practice practice) {
         Intent intent = new Intent(MeditationSelectionActivity.this, MeditationActivity.class);
-        if (preTime != null)
-            intent.putExtra(MeditationActivity.EXTRA_PRE_TIME, preTime.toString());
-        if (preInnerCondition != null)
-            intent.putExtra(MeditationActivity.EXTRA_PRE_INNER, preInnerCondition.toString());
-        intent.putExtra(EXTRA_PRACTICE_ID, practice.getId());
+           intent.putExtra(EXTRA_PRACTICE_ID, practice.getId());
         startActivity(intent);
     }
 
