@@ -406,8 +406,8 @@ public class PracticeRepository {
 //                return R.raw.gm_tara_brach_sacred_pause;
 //            case "gm_tara_brach_smile":
 //                return R.raw.gm_tara_brach_smile;
-            case "am_birds":
-                return R.raw.am_birds;
+//            case "am_birds":
+//                return R.raw.am_birds;
             default:
                 return 0;
         }
