@@ -24,7 +24,7 @@ public class SessionListAdapter extends RecyclerView.Adapter<SessionListAdapter.
 
     private final Callbacks callbacks;
     private final List<SessionEntity> items = new ArrayList<>();
-    private final DateFormat dateFmt = DateFormat.getDateInstance(DateFormat.MEDIUM);
+    private final DateFormat dateFmt = DateFormat.getDateInstance(DateFormat.SHORT);
     private final DateFormat timeFmt = DateFormat.getTimeInstance(DateFormat.SHORT);
 
     public SessionListAdapter(Callbacks callbacks) {
@@ -55,7 +55,7 @@ public class SessionListAdapter extends RecyclerView.Adapter<SessionListAdapter.
 
         // Practice shown as ID to keep it simple.
         // If you want name: resolve via PracticeRepository here or in Activity.
-        h.tvPractice.setText(s.practiceId != null ? s.practiceId : "-");
+        h.tvPractice.setText(s.practiceId != null ? s.practiceId.substring(0,3) : "-");
 
         int minutes = safeMinutes(s);
         h.tvMinutes.setText(minutes + " min");

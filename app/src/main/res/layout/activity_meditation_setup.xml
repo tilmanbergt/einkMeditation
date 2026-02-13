@@ -4,16 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     style="@style/FramePage">
+
     <TextView
         android:id="@+id/text_practice_name"
-        android:text="@string/praxisname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/praxisname"
         style="@style/ActivityHeaderText" />
 
+    <include layout="@layout/view_meditation_setup" />
 
-    <include layout="@layout/view_meditation_running" />
 
-    <include layout="@layout/view_meditation_summary" />
 
 </LinearLayout>

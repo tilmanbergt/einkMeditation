@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+    <!-- SETUP-BEREICH: vor der Meditation -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/layout_footerbuttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+    android:layout_gravity="center"
+    android:gravity="center"
+    tools:showIn="@layout/view_meditation_setup">
+
+            <ImageButton
+                android:id="@+id/button_history"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_stats"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                />
+
+            <ImageButton
+                android:id="@+id/button_andere_praxis"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_activity_bowl"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                />
+
+            <ImageButton
+                android:id="@+id/button_settings"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                android:padding="8dp"
+                android:src="@drawable/ic_settings"
+                android:background="@android:color/transparent"
+
+                />
+
+    </LinearLayout>

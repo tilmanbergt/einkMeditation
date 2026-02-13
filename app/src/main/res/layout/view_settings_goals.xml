@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/goalsContainer"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:text="Daily intention (avg minutes)" />
+
+    <EditText
+        android:hint="60"
+        android:id="@+id/edit_daily_goal_minutes"
+        android:inputType="number"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:text="Long-term direction (minutes)" />
+
+    <EditText
+        android:hint="60"
+        android:id="@+id/edit_long_term_goal_minutes"
+        android:inputType="number"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+</LinearLayout>

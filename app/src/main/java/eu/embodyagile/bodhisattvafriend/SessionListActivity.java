@@ -28,7 +28,7 @@ import eu.embodyagile.bodhisattvafriend.data.SessionEntity;
 public class SessionListActivity extends BaseActivity implements SessionListAdapter.Callbacks {
 
     // --- Tune this for Mudita / e-ink ---
-    private static final int PAGE_SIZE = 18;         // adjust to 15–20 as needed
+    private static final int PAGE_SIZE = 10;         // adjust to 15–20 as needed
     private static final int DEFAULT_START_HOUR = 6; // 06:00
     private static final int DEFAULT_START_MIN = 0;
     private static final int BREAK_MINUTES = 5;      // between sessions

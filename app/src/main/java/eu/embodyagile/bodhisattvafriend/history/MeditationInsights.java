@@ -1,6 +1,10 @@
 package eu.embodyagile.bodhisattvafriend.history;
 
 public class MeditationInsights {
+
+    public final String languageTag; // e.g. "de", "en", "de-DE"
+
+
     public final int goalMinutesPerDay;
 
     public final long minutesToday;
@@ -31,8 +35,10 @@ public class MeditationInsights {
     // headline (top positive framing area)
     public final String headline1;
     public final String headline2;                // optional (can be "")
+    public final int suggestedNewGoalMinutes; // 0 = none
 
     public MeditationInsights(
+            String languageTag,
             int goalMinutesPerDay,
             long minutesToday,
             int currentStreakDays,
@@ -47,10 +53,12 @@ public class MeditationInsights {
             boolean monthRestartMessageToday,
             int suggestedMoreMinutesToday,
             int suggestionType,
+            int suggestedNewGoalMinutes,   // <--- NEU
             String suggestionText,
             String headline1,
             String headline2
     ) {
+        this.languageTag = languageTag;
         this.goalMinutesPerDay = goalMinutesPerDay;
         this.minutesToday = minutesToday;
         this.currentStreakDays = currentStreakDays;
@@ -65,6 +73,7 @@ public class MeditationInsights {
         this.monthRestartMessageToday = monthRestartMessageToday;
         this.suggestedMoreMinutesToday = suggestedMoreMinutesToday;
         this.suggestionType = suggestionType;
+        this.suggestedNewGoalMinutes = Math.max(0, suggestedNewGoalMinutes); // <--- NEU
         this.suggestionText = suggestionText;
         this.headline1 = headline1;
         this.headline2 = headline2;
