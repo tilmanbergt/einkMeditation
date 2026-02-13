@@ -176,4 +176,14 @@
     <string name="dnd_permission_needed">Nicht stören Erlaubnis benötigt</string>
     <string name="starte_mit_5_minuten_nur_hinsetzen_z_hlt_schon">Starte mit 5 Minuten. Nur hinsetzen zählt schon.</string>
 
+
+
+    <string name="settings_practice_cues">Hinweise</string>
+    <string name="settings_dim_during_meditation">Hintergrundbeleuchtung aus, während Meditation</string>
+    <string name="meditation_mode_manual">Optionen</string>
+    <string name="meditation_mode_suggestion">Vorschlag</string>
+    <string name="goals">Ziele</string>
+    <string name="settings_heading_timing">Zeiten</string>
+    <string name="settings_heading_feedback">Rückmeldungen</string>
+    <string name="settings_heading_focus">Fokus</string>
 </resources>

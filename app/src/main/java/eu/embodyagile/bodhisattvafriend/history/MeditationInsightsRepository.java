@@ -5,6 +5,7 @@ import android.content.Context;
 import java.util.*;
 
 import eu.embodyagile.bodhisattvafriend.R;
+import eu.embodyagile.bodhisattvafriend.helper.LocaleHelper;
 import eu.embodyagile.bodhisattvafriend.settings.AppSettings;
 
 public class MeditationInsightsRepository {
@@ -12,8 +13,11 @@ public class MeditationInsightsRepository {
     // 95% threshold for 👍 “on track”
     public static final double TOL = 0.05; // 5%
 
-    // cap extra suggestion to 1.5x daily goal total for today
+    // cap extra suggestion to 1.5x daily long term goal total for today
     public static final double EXTRA_CAP_MULTIPLIER = 1.5;
+
+    public static final int SUGGESTION_RAISE_GOAL = 6;
+
 
     // suggestion types (for click actions / future tuning)
     public static final int SUGGESTION_NONE = 0;
@@ -45,22 +49,31 @@ public class MeditationInsightsRepository {
     private MeditationInsightsRepository(Context appContext) {
         this.appContext = appContext;
 
+
+
         AppSettings.getPrefs(appContext).registerOnSharedPreferenceChangeListener((p, key) -> {
-            if (AppSettings.KEY_DAILY_GOAL_MINUTES.equals(key)) {
-                recompute();
-            }
+            if (AppSettings.KEY_DAILY_GOAL_MINUTES.equals(key)
+                || AppSettings.KEY_LONG_TERM_GOAL_MINUTES.equals(key)) {
+            recompute();
+        }
         });
 
         recompute();
     }
 
     public synchronized MeditationInsights getCached() {
+        if (cached != null) {
+            String now = currentLangTag(getLocalizedAppContext());
+            if (!now.equals(cached.languageTag)) {
+                recompute(); // will replace cached
+            }
+        }
         return cached;
     }
-
     public synchronized void addListener(Listener l) {
         listeners.add(l);
-        if (cached != null) l.onInsightsUpdated(cached);
+        MeditationInsights cur = getCached(); // triggers recompute if needed
+        if (cur != null) l.onInsightsUpdated(cur);
     }
 
     public synchronized void removeListener(Listener l) {
@@ -72,7 +85,7 @@ public class MeditationInsightsRepository {
     }
 
     public void recompute() {
-        MeditationInsights computed = computeNow(appContext);
+        MeditationInsights computed = computeNow(getLocalizedAppContext());
 
         synchronized (this) {
             cached = computed;
@@ -82,11 +95,18 @@ public class MeditationInsightsRepository {
             l.onInsightsUpdated(computed);
         }
     }
-
+    private String currentLangTag(Context c) {
+        return c.getResources().getConfiguration().getLocales().get(0).toLanguageTag();
+    }
     // ----------------- Computation -----------------
-
+    private Context getLocalizedAppContext() {
+        // use your LocaleHelper wrapper; name depends on your implementation
+        return LocaleHelper.onAttach(appContext);
+    }
     private static MeditationInsights computeNow(Context context) {
         final int goal = AppSettings.getDailyGoalMinutes(context);
+        final int longTermGoal = AppSettings.getLongTermGoalMinutes(context);
+
 
         List<SessionLogEntry> sessions = SessionLogManager.getSessions(context);
         if (sessions == null) sessions = Collections.emptyList();
@@ -98,8 +118,9 @@ public class MeditationInsightsRepository {
 
             int suggested = Math.min(5, Math.max(0, goal));
             String suggestion = context.getString(R.string.history_suggest_start, suggested);
+            String langTag = context.getResources().getConfiguration().getLocales().get(0).toLanguageTag();
 
-            return new MeditationInsights(
+            return new MeditationInsights(langTag,
                     goal,
                     0,
                     0,
@@ -114,6 +135,7 @@ public class MeditationInsightsRepository {
                     false,
                     suggested,
                     SUGGESTION_DAILY,
+                    0,
                     suggestion,
                     headline1,
                     headline2
@@ -163,12 +185,70 @@ public class MeditationInsightsRepository {
         boolean monthRestartMessageToday = (minutesToday > 0) && isFirstSessionTodayAfterFullPause(minutesByDay, todayIndex, 30);
 
         // Suggestion (includes horizon name)
-        Suggestion suggestion = buildSuggestion(context, goal, minutesToday, week, month, firstDayIndex, todayIndex);
+        Suggestion suggestion = buildSuggestion(context, goal, longTermGoal, minutesToday, week, month, firstDayIndex, todayIndex);
 
-        // Headline (celebration zone)
+// Headline (celebration zone)
         Headline headline = buildHeadline(context, goal, minutesToday, week, month, weekRestartMessageToday, streakInfo.currentStreakDays);
 
-        return new MeditationInsights(
+// ----------------- NEW: goal mention placement (top only when positive) -----------------
+
+        int g = Math.max(0, goal);
+        boolean dailyOnTrack95 = isDailyOnTrack95(minutesToday, g);
+
+        boolean showMonth = month.effectiveDays >= 10;
+        boolean weekOnTrack95 = (g > 0) && (week.avgPerDay >= g * (1.0 - TOL));
+        boolean monthOnTrack95 = showMonth && (g > 0) && (month.avgPerDay >= g * (1.0 - TOL));
+
+// “positive” = practically reached on at least one horizon
+        boolean positiveTop = dailyOnTrack95 || weekOnTrack95 || monthOnTrack95;
+
+        String headline1 = headline.line1;
+        String headline2 = headline.line2;
+
+        if (g > 0 && positiveTop) {
+            // Put goal at the top (in parentheses) only in the positive case
+            headline1 = withGoalParen(headline1, g);
+        } else {
+            // Otherwise: prefer showing goal at the bottom (i.e., in suggestion) when it exists
+            if (g > 0 && suggestion != null && suggestion.text != null && !suggestion.text.isEmpty()) {
+                suggestion = new Suggestion(suggestion.moreMinutesToday, suggestion.type, 0, withGoalParen(suggestion.text, g));
+            }
+        }
+
+// ----------------- NEW: raise goal suggestion (stable reached) -----------------
+
+
+// show raise suggestion only when:
+// - goal is stable reached
+// - there is room to increase (next step > current)
+// - and we are NOT in “restart message” mode (to keep tone coherent)
+// - and current suggestion is “nothing to do” / “wash bowls” (i.e., not competing with “do X minutes”)
+        boolean fullWeek = (week.effectiveDays == 7);
+        boolean monthReady = (month.effectiveDays == 30) || (month.effectiveDays >= 14);
+
+        boolean weekOnTrack95ForRaise =
+                fullWeek && (g > 0) && (week.avgPerDay >= g * (1.0 - TOL));
+
+        boolean monthOnTrack95ForRaise =
+                monthReady && (g > 0) && (month.avgPerDay >= g * (1.0 - TOL));
+
+        boolean stableReached = weekOnTrack95ForRaise && monthOnTrack95ForRaise;
+
+        if (g > 0 && stableReached && !weekRestartMessageToday) {
+            int next = nextGoalStep(g, longTermGoal);
+
+            if (next > g && (suggestion.type == SUGGESTION_NONE || suggestion.type == SUGGESTION_WASH_BOWLS)) {
+                // Keep it very simple: one suggested step + (current goal)
+                // If you want localization, replace this with a string resource later.
+                String raiseText = "Du erreichst dein Ziel stabil. Neues Ziel: " + next + "?";
+                raiseText = withGoalParen(raiseText, g);
+
+                suggestion = new Suggestion(0, SUGGESTION_RAISE_GOAL,next, raiseText);
+            }
+        }
+        String langTag = context.getResources().getConfiguration().getLocales().get(0).toLanguageTag();
+
+        return new MeditationInsights(langTag,
                 goal,
                 minutesToday,
                 streakInfo.currentStreakDays,
@@ -183,10 +263,12 @@ public class MeditationInsightsRepository {
                 monthRestartMessageToday,
                 suggestion.moreMinutesToday,
                 suggestion.type,
+                suggestion.suggestedNewGoalMinutes,
                 suggestion.text,
-                headline.line1,
-                headline.line2
+                headline1,
+                headline2
         );
+
     }
 
     // ----------------- Horizon logic -----------------
@@ -297,63 +379,113 @@ public class MeditationInsightsRepository {
         return sum;
     }
 
+
+    private static String withGoalParen(String s, int goal) {
+        if (s == null) return "";
+        String g = "(" + goal + ")";
+        if (s.contains(g)) return s; // avoid duplicates
+        // add a space before (goal) if needed
+        if (s.endsWith(" ") || s.endsWith("\n") || s.isEmpty()) return s + g;
+        return s + " " + g;
+    }
+
+    private static boolean isDailyOnTrack95(int minutesToday, int goal) {
+        int g = Math.max(0, goal);
+        if (g <= 0) return false;
+        return (minutesToday > 0) && (minutesToday >= Math.round(g * (1.0 - TOL)));
+    }
+
+
+    /**
+     * Step ladder towards long-term goal.
+     * Picks the next ladder step above current, but not above longTerm (if longTerm>0).
+     */
+    private static int nextGoalStep(int currentGoal, int longTermGoal) {
+        int cur = Math.max(0, currentGoal);
+        int lt = Math.max(0, longTermGoal);
+
+        // If no long-term goal set, treat as "no cap"
+        int cap = (lt > 0) ? lt : Integer.MAX_VALUE;
+
+        // A simple ladder; tweak freely
+        int[] ladder = new int[]{5, 10, 15, 20, 25, 30, 40, 50, 60, 75, 90};
+
+        for (int step : ladder) {
+            if (step > cur && step <= cap) return step;
+        }
+
+        // If current < cap but ladder exhausted, just propose cap
+        if (cur < cap) return cap;
+
+        return cur; // no increase possible
+    }
+
+
+
     // ----------------- Suggestion -----------------
 
     private static class Suggestion {
         final int moreMinutesToday;
         final int type;
+        final int suggestedNewGoalMinutes; // 0 = none
         final String text;
 
-        Suggestion(int moreMinutesToday, int type, String text) {
+        Suggestion(int moreMinutesToday, int type, int suggestedNewGoalMinutes, String text) {
             this.moreMinutesToday = Math.max(0, moreMinutesToday);
             this.type = type;
+            this.suggestedNewGoalMinutes = Math.max(0, suggestedNewGoalMinutes);
             this.text = text;
         }
     }
+
+
 
     private static final int MIN_SUGGESTION_MINUTES = 5; // easy to tweak later
 
     private static Suggestion buildSuggestion(
             Context context,
             int goal,
+            int longTermGoal,
             int minutesToday,
             HorizonResult week,
             HorizonResult month,
             long firstDayIndex,
             long todayIndex
     ) {
-        int g = Math.max(0, goal);
-        if (g <= 0) {
-            return new Suggestion(10, SUGGESTION_DAILY,
+        int normalizedGoal = Math.max(0, goal);
+        int normalizedLongTermGoal = Math.max(0, longTermGoal);
+
+        if (normalizedGoal <= 0) {
+            return new Suggestion(10, SUGGESTION_DAILY,0,
                     context.getString(R.string.history_suggest_daily, 10));
         }
 
         // daily on track requires actual practice today (per your definition)
-        boolean dailyOnTrack95 = (minutesToday > 0) && (minutesToday >= Math.round(g * (1.0 - TOL)));
+        boolean dailyOnTrack95 = (minutesToday > 0) && (minutesToday >= Math.round(normalizedGoal * (1.0 - TOL)));
 
-        boolean weekOnTrack95 = (week.avgPerDay >= g * (1.0 - TOL));
-        boolean monthOnTrack95 = (month.avgPerDay >= g * (1.0 - TOL));
+        boolean weekOnTrack95 = (week.avgPerDay >= normalizedGoal * (1.0 - TOL));
+        boolean monthOnTrack95 = (month.avgPerDay >= normalizedGoal * (1.0 - TOL));
 
-        boolean dailyMet100 = (minutesToday >= g);
-        boolean weekMet100 = (week.avgPerDay >= g);
-        boolean monthMet100 = (month.avgPerDay >= g);
+        boolean dailyMet100 = (minutesToday >= normalizedGoal);
+        boolean weekMet100 = (week.avgPerDay >= normalizedGoal);
+        boolean monthMet100 = (month.avgPerDay >= normalizedGoal);
 
         int daysSinceFirst = (int) (todayIndex - firstDayIndex + 1);
 
         // Goal adaptation: only when FULL 30-day window exists and progress is very low
         boolean full30Available = (daysSinceFirst >= 30) && (month.effectiveDays == 30);
         if (full30Available) {
-            double monthProgress = (month.totalMinutes / (double) (g * 30));
+            double monthProgress = (month.totalMinutes / (double) (normalizedGoal * 30));
             boolean veryLow = monthProgress < 0.5;
 
             if (veryLow && !dailyOnTrack95 && !weekOnTrack95 && !monthOnTrack95) {
-                return new Suggestion(0, SUGGESTION_ADAPT_GOAL,
+                return new Suggestion(0, SUGGESTION_ADAPT_GOAL,0,
                         context.getString(R.string.history_suggest_adapt_goal));
             }
         }
 
         // Cap: total today should not exceed 1.5x goal
-        int capTotal = (int) Math.ceil(g * EXTRA_CAP_MULTIPLIER);
+        int capTotal = (int) Math.ceil(normalizedLongTermGoal * EXTRA_CAP_MULTIPLIER);
         int maxExtra = Math.max(0, capTotal - minutesToday);
 
         // Helper: apply minimum suggestion (but never exceed cap)
@@ -371,23 +503,23 @@ public class MeditationInsightsRepository {
         // prefer suggesting minutes to improve weekly/monthly (more motivating than tiny daily top-up).
         if (dailyOnTrack95) {
             if (!weekOnTrack95) {
-                int targetTotal = g * week.effectiveDays;                 // bring avg to 100% across effective window
+                int targetTotal = normalizedGoal * week.effectiveDays;                 // bring avg to 100% across effective window
                 int neededToday = Math.max(0, targetTotal - week.totalMinutes);
                 int suggest = applyMin.applyAsInt(neededToday);
 
                 if (suggest > 0) {
-                    return new Suggestion(suggest, SUGGESTION_WEEKLY,
+                    return new Suggestion(suggest, SUGGESTION_WEEKLY,0,
                             context.getString(R.string.history_suggest_weekly, suggest));
                 }
             }
 
             if (showMonthlyLine && !monthOnTrack95) {
-                int targetTotal = g * month.effectiveDays;
+                int targetTotal = normalizedGoal * month.effectiveDays;
                 int neededToday = Math.max(0, targetTotal - month.totalMinutes);
                 int suggest = applyMin.applyAsInt(neededToday);
 
                 if (suggest > 0) {
-                    return new Suggestion(suggest, SUGGESTION_MONTHLY,
+                    return new Suggestion(suggest, SUGGESTION_MONTHLY,0,
                             context.getString(R.string.history_suggest_monthly, suggest));
                 }
             }
@@ -396,51 +528,51 @@ public class MeditationInsightsRepository {
         // --- Existing ladder (slightly simplified) ---
         // 1) Daily below 100 -> suggest remaining to reach daily target
         if (!dailyMet100) {
-            int need = Math.max(0, g - minutesToday);
+            int need = Math.max(0, normalizedGoal - minutesToday);
             int suggest = applyMin.applyAsInt(need);
 
-            if (suggest <= 0) return new Suggestion(0, SUGGESTION_NONE, "");
+            if (suggest <= 0) return new Suggestion(0, SUGGESTION_NONE, 0,"");
 
             if (weekMet100 && monthMet100) {
-                return new Suggestion(suggest, SUGGESTION_DAILY,
+                return new Suggestion(suggest, SUGGESTION_DAILY,0,
                         context.getString(R.string.history_suggest_daily_keep_momentum, suggest));
             } else {
-                return new Suggestion(suggest, SUGGESTION_DAILY,
+                return new Suggestion(suggest, SUGGESTION_DAILY,0,
                         context.getString(R.string.history_suggest_daily, suggest));
             }
         }
 
         // 2) Weekly to 100 (only if daily is at least on track)
         if (dailyOnTrack95 && !weekMet100) {
-            int targetTotal = g * week.effectiveDays;
+            int targetTotal = normalizedGoal * week.effectiveDays;
             int neededToday = Math.max(0, targetTotal - week.totalMinutes);
             int suggest = applyMin.applyAsInt(neededToday);
 
             if (suggest > 0) {
-                return new Suggestion(suggest, SUGGESTION_WEEKLY,
+                return new Suggestion(suggest, SUGGESTION_WEEKLY,0,
                         context.getString(R.string.history_suggest_weekly, suggest));
             }
         }
 
         // 3) Monthly to 100 (only if daily+weekly are on track)
         if (showMonthlyLine && dailyOnTrack95 && weekOnTrack95 && !monthMet100) {
-            int targetTotal = g * month.effectiveDays;
+            int targetTotal = normalizedGoal * month.effectiveDays;
             int neededToday = Math.max(0, targetTotal - month.totalMinutes);
             int suggest = applyMin.applyAsInt(neededToday);
 
             if (suggest > 0) {
-                return new Suggestion(suggest, SUGGESTION_MONTHLY,
+                return new Suggestion(suggest, SUGGESTION_MONTHLY,0,
                         context.getString(R.string.history_suggest_monthly, suggest));
             }
         }
 
         // 4) Everything on track -> wash bowls
         if (dailyOnTrack95 && weekOnTrack95 && (!showMonthlyLine || monthOnTrack95)) {
-            return new Suggestion(0, SUGGESTION_WASH_BOWLS,
+            return new Suggestion(0, SUGGESTION_WASH_BOWLS,0,
                     context.getString(R.string.history_suggest_wash_bowls));
         }
 
-        return new Suggestion(0, SUGGESTION_NONE, "");
+        return new Suggestion(0, SUGGESTION_NONE, 0,"");
     }
 
 

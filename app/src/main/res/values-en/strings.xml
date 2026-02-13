@@ -14,22 +14,22 @@
     <string name="history_suggest_daily_keep_momentum">+%1$d min today to keep the momentum.</string>
     <string name="history_suggest_weekly">+%1$d min today to improve your weekly average.</string>
     <string name="history_suggest_monthly">+%1$d min today to improve your monthly average.</string>
-    <string name="history_suggest_adapt_goal">Adjust goal</string>
-    <string name="history_suggest_wash_bowls">You’re on top of things — go wash your bowls.</string>
+    <string name="history_suggest_adapt_goal">You’ve been far from your goal for 30 days. Maybe adjust it for now.</string>
+    <string name="history_suggest_wash_bowls">Great! Meditation isn’t your problem — go wash your bowls.</string>
 
-    <string name="history_headline_start">Good to have you here.</string>
+    <string name="history_headline_start">It’s good that you’re starting your meditation here.</string>
     <string name="history_headline_start_2">Even 5 minutes count.</string>
     <string name="history_suggest_start">+%1$d min today — just sit down.</string>
-    <string name="history_streak_continue_today">Streak: %1$d days — continue today!</string>
+    <string name="history_streak_continue_today">Streak: %1$d days — keep it going today!</string>
 
-    <string name="history_headline_today_done">Done for today.</string>
-    <string name="history_headline_today_good_start">Good start today.</string>
-    <string name="history_headline_week_on_track">Your week is on track.</string>
+    <string name="history_headline_today_done">Yes! You’ve reached your daily goal!</string>
+    <string name="history_headline_today_good_start">You’re well on your way to your daily goal.</string>
+    <string name="history_headline_week_on_track">You’re strong this week.</string>
     <string name="history_headline_month_on_track">Your month is on track.</string>
-    <string name="history_headline_month_on_fire">More than on track (month).</string>
+    <string name="history_headline_month_on_fire">You’ve been more than on track these last 30 days!</string>
     <string name="history_headline_continue_today">Continue today.</string>
-    <string name="history_headline_restart">Strong restart.</string>
-    <string name="history_headline_streak_milestone">Strong streak!</string>
+    <string name="history_headline_restart">Great that you’ve returned.</string>
+    <string name="history_headline_streak_milestone">What a streak!</string>
     <string name="history_headline_generic">Keep going.</string>
 
     <string name="history_streak_days">Streak: %1$d days</string>
@@ -45,7 +45,7 @@
     <string name="tag">day</string>
 
     <string name="vorschlag_heute">Suggested today</string>
-    <string name="erster_tag_verlauf">First day recorded – well done!</string>
+    <string name="erster_tag_verlauf">First day recorded — keep going!</string>
     <!-- History Screen -->
     <string name="history_title">Thank you for practicing.</string>
     <string name="history_message">
@@ -158,7 +158,16 @@
     <string name="select_file">Select File</string>
     <string name="show_candle_timer">Candle as Timer</string>
     <string name="use_dnd_during_meditation">Do not disturb during meditation</string>
-    <string name="dnd_permission_needed">Dot Disturb Permission Needed</string>
-    <string name="beste_serie">Beste Serie</string>
-    <string name="starte_mit_5_minuten_nur_hinsetzen_z_hlt_schon">Starte mit 5 Minuten. Nur hinsetzen zählt schon.</string>
+    <string name="dnd_permission_needed">Do Not Disturb Permission Needed</string>
+    <string name="beste_serie">Best Series</string>
+    <string name="starte_mit_5_minuten_nur_hinsetzen_z_hlt_schon">Start with 5 minutes. Just sitting counts.</string>
+
+    <string name="settings_practice_cues">Cues</string>
+    <string name="settings_dim_during_meditation">Dim screen during meditation</string>
+    <string name="meditation_mode_manual">Options</string>
+    <string name="meditation_mode_suggestion">Suggestion</string>
+    <string name="goals">Goals</string>
+    <string name="settings_heading_timing">Timing</string>
+    <string name="settings_heading_feedback">Feedback</string>
+    <string name="settings_heading_focus">Focus</string>
 </resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/settings_pager_controls"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+android:gravity="center"
+android:visibility="invisible">
+
+<TextView
+    android:id="@+id/pager_prev"
+    style="@style/TextLinkButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="↑" />
+
+<TextView
+android:id="@+id/pager_status"
+style="@style/NormalText"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:paddingStart="16dp"
+android:paddingEnd="16dp"
+android:text="1/1" />
+
+<TextView
+android:id="@+id/pager_next"
+style="@style/TextLinkButton"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="↓" />
+    </LinearLayout>

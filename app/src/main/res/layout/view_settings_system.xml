@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/settings_system_container"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+    <TextView
+        style="@style/TextLinkButton"
+        android:id="@+id/button_reset_practices"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_width="match_parent"
+        android:text="@string/reset_practices_to_default" /> <!-- <TextView android:id="@+id/button_edit_vow" style="@style/MainTextButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/gel_bde_bearbeiten" /> -->
+    <Button
+        style="@style/ActionButton"
+        android:id="@+id/button_show_last_practices"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_width="match_parent"
+        android:text="@string/zeige_letzte_praxen" />
+
+
+</LinearLayout>

@@ -171,26 +171,24 @@
         android:textSize="18sp"
         android:paddingBottom="18dp" />
 
+
+
+    <!-- Buttons -->
+
+
     <Space
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
-
-    <!-- Buttons -->
-    <Button
-        android:id="@+id/button_show_last_practices"
+    <!-- Bottom area: stays together -->
+    <LinearLayout
+        android:id="@+id/layout_bottom_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        style="@style/ActionButton"
-        android:text="@string/zeige_letzte_praxen" />
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/button_history_close"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        style="@style/TextLinkButton"
-        android:text="@string/home" />
+
+        <include layout="@layout/view_footerbuttons" />
+    </LinearLayout>
 
 </LinearLayout>

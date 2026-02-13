@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/settings_manage_practices_container"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+    <TextView
+        style="@style/MainTextButton"
+        android:id="@+id/button_create_practice"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="@string/create_new_practice" />
+
+    <TextView
+        style="@style/MainTextButton"
+        android:id="@+id/button_edit_delete_practice"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="@string/edit_or_delete_practice" />
+
+    <TextView
+        style="@style/MainTextButton"
+        android:id="@+id/button_export_practices"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="@string/export_practices" />
+
+    <TextView
+        style="@style/MainTextButton"
+        android:id="@+id/button_import_practices"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="@string/import_practices" />
+
+
+</LinearLayout>

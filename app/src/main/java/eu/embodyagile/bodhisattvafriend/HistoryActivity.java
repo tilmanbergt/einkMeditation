@@ -2,17 +2,24 @@ package eu.embodyagile.bodhisattvafriend;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import androidx.appcompat.app.AlertDialog;
+import android.widget.Toast;
+
+import java.util.List;
 
 import eu.embodyagile.bodhisattvafriend.history.MeditationInsights;
 import eu.embodyagile.bodhisattvafriend.history.MeditationInsightsRepository;
+import eu.embodyagile.bodhisattvafriend.history.SessionLogEntry;
+import eu.embodyagile.bodhisattvafriend.history.SessionLogManager;
+import eu.embodyagile.bodhisattvafriend.settings.AppSettings;
 
 public class HistoryActivity extends BaseActivity {
 
-    // TODO step 2: implement in MeditationActivity
     public static final String EXTRA_SUGGESTED_MINUTES = "extra_suggested_minutes";
 
     private TextView tvHeadline1;
@@ -28,7 +35,7 @@ public class HistoryActivity extends BaseActivity {
     private TextView tvStreak;
 
     private Button btnShowList;
-    private Button closeButton;
+
 
     private MeditationInsightsRepository repo;
     private final MeditationInsightsRepository.Listener listener = this::render;
@@ -37,6 +44,7 @@ public class HistoryActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
+        setupFooter(FooterTab.HISTORY);
 
         tvHeadline1 = findViewById(R.id.text_history_headline1);
         tvHeadline2 = findViewById(R.id.text_history_headline2);
@@ -57,18 +65,11 @@ public class HistoryActivity extends BaseActivity {
 
         tvSuggestion = findViewById(R.id.text_history_suggestion);
         tvStreak = findViewById(R.id.text_history_streak);
-
-        btnShowList = findViewById(R.id.button_show_last_practices);
-        closeButton = findViewById(R.id.button_history_close);
-
         repo = MeditationInsightsRepository.getInstance(this);
 
-        btnShowList.setOnClickListener(v -> {
-            Intent intent = new Intent(this, SessionListActivity.class);
-            startActivity(intent);
-        });
 
-        closeButton.setOnClickListener(v -> finish());
+
+
 
         tvSuggestion.setOnClickListener(v -> handleSuggestionClick(repo.getCached()));
     }
@@ -93,6 +94,12 @@ public class HistoryActivity extends BaseActivity {
     }
 
     private void render(MeditationInsights i) {
+        List<SessionLogEntry> sessions =
+                SessionLogManager.getSessions(this);
+
+        Log.d("HISTORY_CHECK",
+                "sessions found in HistoryActivity: "
+                        + (sessions == null ? "null" : sessions.size()));
         if (i == null) return;
 
         final int goal = i.goalMinutesPerDay;
@@ -156,13 +163,28 @@ public class HistoryActivity extends BaseActivity {
         }
 
         // --- Suggestion row ---
-        if (i.suggestionText != null && !i.suggestionText.trim().isEmpty()) {
+        boolean hasSuggestion = (i.suggestionText != null && !i.suggestionText.trim().isEmpty());
+        if (hasSuggestion) {
             tvSuggestion.setText(i.suggestionText);
             tvSuggestion.setVisibility(View.VISIBLE);
+
+            // enable click only for actionable types
+            boolean actionable =
+                    i.suggestionType == MeditationInsightsRepository.SUGGESTION_DAILY
+                            || i.suggestionType == MeditationInsightsRepository.SUGGESTION_WEEKLY
+                            || i.suggestionType == MeditationInsightsRepository.SUGGESTION_MONTHLY
+                            || i.suggestionType == MeditationInsightsRepository.SUGGESTION_ADAPT_GOAL
+                            || i.suggestionType == MeditationInsightsRepository.SUGGESTION_RAISE_GOAL;
+
+            tvSuggestion.setClickable(actionable);
+            tvSuggestion.setEnabled(actionable);
         } else {
             tvSuggestion.setText("");
             tvSuggestion.setVisibility(View.GONE);
+            tvSuggestion.setClickable(false);
+            tvSuggestion.setEnabled(false);
         }
+
 
         // --- Streak row ---
         if (i.currentStreakDays >= 2) {
@@ -185,15 +207,59 @@ public class HistoryActivity extends BaseActivity {
                 || i.suggestionType == MeditationInsightsRepository.SUGGESTION_MONTHLY) {
 
             // Step 1: jump to MeditationActivity; Step 2: implement EXTRA handling there.
-            Intent intent = new Intent(this, MeditationActivity.class);
+            Intent intent = new Intent(this, MeditationSetupActivity.class);
             intent.putExtra(EXTRA_SUGGESTED_MINUTES, i.suggestedMoreMinutesToday);
             startActivity(intent);
             return;
         }
 
+        if (i.suggestionType == MeditationInsightsRepository.SUGGESTION_RAISE_GOAL) {
+            int nextGoal = i.suggestedNewGoalMinutes; // <--- Feldname wie von dir ergänzt
+            if (nextGoal > 0) {
+                showRaiseGoalDialog(nextGoal);
+            }
+            return;
+        }
+
+
         if (i.suggestionType == MeditationInsightsRepository.SUGGESTION_ADAPT_GOAL) {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
+            int current = i.goalMinutesPerDay;
+            int suggested = clampGoal(current / 2);
+            showLowerGoalDialog(current, suggested);
+            return;
         }
     }
+    private int clampGoal(int v) {
+        if (v < AppSettings.MIN_DAILY_GOAL_MINUTES) return AppSettings.MIN_DAILY_GOAL_MINUTES;
+        if (v > AppSettings.MAX_DAILY_GOAL_MINUTES) return AppSettings.MAX_DAILY_GOAL_MINUTES;
+        return v;
+    }
+    private void showLowerGoalDialog(int currentGoal, int suggestedGoal) {
+        new AlertDialog.Builder(this)
+                .setTitle("Ziel anpassen?")
+                .setMessage("Aktuell: " + currentGoal + "\nVorschlag: " + suggestedGoal)
+                .setPositiveButton("Übernehmen", (d, which) -> {
+                    AppSettings.setDailyGoalMinutes(this, suggestedGoal);
+                    Toast.makeText(this, "Neues Ziel: " + suggestedGoal, Toast.LENGTH_SHORT).show();
+                    MeditationInsightsRepository.getInstance(this).recompute();
+                })
+                .setNegativeButton("Später", null)
+                .show();
+    }
+
+    private void showRaiseGoalDialog(int nextGoal) {
+        new AlertDialog.Builder(this)
+                .setTitle("Ziel anheben?")
+                .setMessage("Neues Tagesziel: " + nextGoal)
+                .setPositiveButton("Übernehmen", (d, which) -> {
+                    AppSettings.setDailyGoalMinutes(this, nextGoal);
+                    Toast.makeText(this, "Neues Ziel: " + nextGoal, Toast.LENGTH_SHORT).show();
+
+                    // Optional: sofort neu rendern. Wenn dein Repo auch Pref-Listener hat, reicht das ggf. allein.
+                    MeditationInsightsRepository.getInstance(this).recompute();
+                })
+                .setNegativeButton("Später", null)
+                .show();
+    }
+
 }

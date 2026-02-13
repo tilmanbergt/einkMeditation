@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -21,18 +22,23 @@ import android.provider.Settings;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SwitchCompat;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import eu.embodyagile.bodhisattvafriend.data.PracticeRepository;
 import eu.embodyagile.bodhisattvafriend.helper.LocaleHelper;
+import eu.embodyagile.bodhisattvafriend.helper.PagedListController;
+import eu.embodyagile.bodhisattvafriend.history.MeditationInsightsRepository;
 import eu.embodyagile.bodhisattvafriend.settings.AppSettings;
 
 public class SettingsActivity extends BaseActivity {
-     private SwitchCompat switchCandle;
+
     private SwitchCompat switchDnd;
     private View settingsMainContainer;
     private View goalsContainer;
 
     private TextView buttonGoals;
-    private Button buttonGoalsBack;
+
 
 
     private boolean pendingDndEnable = false;
@@ -42,22 +48,23 @@ public class SettingsActivity extends BaseActivity {
 
     private RadioGroup langGroup;
     private RadioButton langSystem, langDe, langEn;
-    private SwitchCompat switchVibration;
-    private SwitchCompat switchFlash;
-    private EditText preMeditationCountdownEdit;
+
+    private PagedListController practicePager;
+    private final List<View> practiceRows = new ArrayList<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        setupFooter(FooterTab.SETTINGS);
 
 
         settingsMainContainer = findViewById(R.id.settings_main_menu);
         goalsContainer = findViewById(R.id.goalsContainer);
 
-        buttonGoalsBack = findViewById(R.id.button_goals_back);
-              buttonGoalsBack.setOnClickListener(v -> showMainSettingsPage());
+      //  buttonGoalsBack = findViewById(R.id.button_goals_back);
+      //  buttonGoalsBack.setOnClickListener(v -> showSubPage(null));
 
         headerText = findViewById(R.id.settings_header_text);
         mainMenu = findViewById(R.id.settings_main_menu);
@@ -84,7 +91,8 @@ if (enabled) {
         findViewById(R.id.button_system_settings).setOnClickListener(v -> showSubPage(systemContainer));
         buttonGoals = findViewById(R.id.button_goals_settings);
 
-        buttonGoals.setOnClickListener(v -> showGoalsPage());
+        buttonGoals.setOnClickListener(v -> showSubPage(goalsContainer));
+
 
         TextView practiceManagement=  findViewById(R.id.button_manage_practices_settings);
         boolean enabled = getResources().getBoolean(R.bool.config_feature_practicemanagement);
@@ -126,105 +134,166 @@ if (enabled) {
             }
         });
 
-        findViewById(R.id.button_back_language).setOnClickListener(v -> showSubPage(null));
-    }
-    private void showGoalsPage() {
-        settingsMainContainer.setVisibility(View.GONE);
-        goalsContainer.setVisibility(View.VISIBLE);
+    //    findViewById(R.id.button_back_language).setOnClickListener(v -> showSubPage(null));
     }
 
-    private void showMainSettingsPage() {
-        goalsContainer.setVisibility(View.GONE);
-        settingsMainContainer.setVisibility(View.VISIBLE);
-    }
+
+
 
     private void setupPracticeSettings() {
-        switchVibration = findViewById(R.id.switch_vibration);
-        switchFlash = findViewById(R.id.switch_flash);
-        preMeditationCountdownEdit = findViewById(R.id.edit_pre_meditation_countdown);
+        LinearLayout host = findViewById(R.id.practice_settings_page_host);
+        if (host == null) return;
 
-        // NEW:
-        switchCandle = findViewById(R.id.switch_candle);
-        switchDnd = findViewById(R.id.switch_dnd);
+        // Build row views once (bound + listeners attached)
+        practiceRows.clear();
 
-        boolean vibrationOn = AppSettings.isVibrationOnStartEndEnabled(this);
-        boolean flashOn = AppSettings.isFlashOnStartEndEnabled(this);
+        // --- Timing ---
+        practiceRows.add(createHeading(getString(R.string.settings_heading_timing)));
 
-        switchVibration.setChecked(vibrationOn);
-        switchFlash.setChecked(flashOn);
-
-        switchVibration.setOnCheckedChangeListener((buttonView, isChecked) -> AppSettings.setVibrationOnStartEndEnabled(this,isChecked));
-
-        switchFlash.setOnCheckedChangeListener((buttonView, isChecked) ->
-                AppSettings.setFlashOnStartEndEnabled(this,isChecked));
-
-
+        EditText countdownEdit = createNumberRow(getString(R.string.pre_meditation_countdown_seconds));
         int countdown = AppSettings.getPremeditationCountdownSec(this);
-        preMeditationCountdownEdit.setText(String.valueOf(countdown));
+        countdownEdit.setText(String.valueOf(countdown));
+        bindNumberInstant(countdownEdit, value ->
+                AppSettings.setPremeditationCountdownSec(getApplicationContext(), value)
+        );
 
-        preMeditationCountdownEdit.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        // --- Feedback ---
+        practiceRows.add(createHeading(getString(R.string.settings_heading_feedback)));
 
-            @Override
-            public void afterTextChanged(Editable s) {
-                int value = 0;
-                try {
-                    String t = s.toString().trim();
-                    if (!t.isEmpty()) value = Integer.parseInt(t);
-                } catch (NumberFormatException ignored) {}
-                AppSettings.setPremeditationCountdownSec(getApplicationContext(), value);
+        SwitchCompat vib = createSwitchRow(getString(R.string.vibrate_on_start_end));
+        vib.setChecked(AppSettings.isVibrationOnStartEndEnabled(this));
+        vib.setOnCheckedChangeListener((btn, isChecked) ->
+                AppSettings.setVibrationOnStartEndEnabled(this, isChecked)
+        );
 
-            }
-        });
+        SwitchCompat flash = createSwitchRow(getString(R.string.flash_on_start_end));
+        flash.setChecked(AppSettings.isFlashOnStartEndEnabled(this));
+        flash.setOnCheckedChangeListener((btn, isChecked) ->
+                AppSettings.setFlashOnStartEndEnabled(this, isChecked)
+        );
 
-// optional safety-net (some keyboards don’t trigger change events the way you expect)
-        preMeditationCountdownEdit.setOnFocusChangeListener((v, hasFocus) -> {
-            if (!hasFocus) {
-                String t = preMeditationCountdownEdit.getText().toString().trim();
-                int value = 0;
-                try {
-                    if (!t.isEmpty()) value = Integer.parseInt(t);
-                } catch (NumberFormatException ignored) {}
-                AppSettings.setPremeditationCountdownSec(this,value);
-            }
-        });
+        // --- Focus ---
+        practiceRows.add(createHeading(getString(R.string.settings_heading_focus)));
 
+        SwitchCompat candle = createSwitchRow(getString(R.string.show_candle_timer));
+        candle.setChecked(AppSettings.isCandleEnabled(this));
+        candle.setOnCheckedChangeListener((btn, isChecked) ->
+                AppSettings.setCandleEnabled(this, isChecked)
+        );
 
-        // … keep your TextWatcher as-is …
-
-        // ---- Candle default ON ----
-        boolean candleOn = AppSettings.isCandleEnabled(this);
-        switchCandle.setChecked(candleOn);
-        switchCandle.setOnCheckedChangeListener((buttonView, isChecked) ->
-                AppSettings.setCandleEnabled(this,isChecked));
-
-
-        // ---- DND default OFF; only persist ON if access granted ----
-        boolean dndOn = AppSettings.isDndEnabled(this);
-        switchDnd.setChecked(dndOn);
-
-        switchDnd.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        // DND (permission-aware)
+        SwitchCompat dnd = createSwitchRow(getString(R.string.use_dnd_during_meditation));
+        switchDnd = dnd; // IMPORTANT: used in onResume()
+        dnd.setChecked(AppSettings.isDndEnabled(this));
+        dnd.setOnCheckedChangeListener((btn, isChecked) -> {
             if (!isChecked) {
                 pendingDndEnable = false;
-                AppSettings.setDndEnabled(this,false);
+                AppSettings.setDndEnabled(this, false);
                 return;
             }
 
-            // user turned ON:
             if (hasDndAccess()) {
-                AppSettings.setDndEnabled(this,true);
+                AppSettings.setDndEnabled(this, true);
             } else {
-                // do NOT store ON yet; send user to settings
                 pendingDndEnable = true;
-                switchDnd.setChecked(false); // keep UI honest until granted
+                dnd.setChecked(false); // keep UI honest until granted
                 openDndAccessSettings();
                 Toast.makeText(this, R.string.dnd_permission_needed, Toast.LENGTH_LONG).show();
             }
         });
 
-        findViewById(R.id.button_back_practice).setOnClickListener(v -> showSubPage(null));
+        // Back button stays as-is
+      //  findViewById(R.id.button_back_practice).setOnClickListener(v -> showSubPage(null));
+
+
+
+        // --- Pager hookup (NOW INSIDE practiceContainer) ---
+        View pagerControls = practiceContainer.findViewById(R.id.settings_pager_controls);
+        TextView prev = practiceContainer.findViewById(R.id.pager_prev);
+        TextView status = practiceContainer.findViewById(R.id.pager_status);
+        TextView next = practiceContainer.findViewById(R.id.pager_next);
+
+        if (practicePager == null) {
+            practicePager = new PagedListController(host, pagerControls, prev, status, next);
+
+            // Swipe: attach to HOST (better than whole container, fewer accidental flings)
+            practicePager.attachSwipe(host);
+        }
+
+        practicePager.setRows(practiceRows);
+        practicePager.computePagesAfterLayoutAndShow();
     }
+
+
+    /** --- small helpers --- */
+
+    private View createHeading(String text) {
+        TextView h = (TextView) getLayoutInflater().inflate(R.layout.row_heading, null, false);
+        h.setText(text);
+        return h;
+    }
+
+    private SwitchCompat createSwitchRow(String label) {
+        View row = getLayoutInflater().inflate(R.layout.row_switch, null, false);
+        if (practicePager != null) {
+            practicePager.installSwipeOn(row);
+        }
+        TextView tv = row.findViewById(R.id.row_label);
+        SwitchCompat sw = row.findViewById(R.id.row_switch);
+        tv.setText(label);
+        practiceRows.add(row);
+        return sw;
+    }
+
+    private EditText createNumberRow(String label) {
+        View row = getLayoutInflater().inflate(R.layout.row_number, null, false);
+
+        if (practicePager != null) {
+            practicePager.installSwipeOn(row);
+
+            View lbl = row.findViewById(R.id.row_label);
+            if (lbl != null) practicePager.installSwipeOn(lbl);
+            // Do NOT install on the EditText
+        }
+
+        TextView tv = row.findViewById(R.id.row_label);
+        EditText ed = row.findViewById(R.id.row_edit);
+        tv.setText(label);
+        practiceRows.add(row);
+        return ed;
+    }
+
+
+
+    private interface IntConsumer { void accept(int value); }
+
+    private void bindNumberInstant(EditText edit, IntConsumer saver) {
+        edit.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override public void afterTextChanged(Editable s) {
+                int value = 0;
+                try {
+                    String t = s.toString().trim();
+                    if (!t.isEmpty()) value = Integer.parseInt(t);
+                } catch (NumberFormatException ignored) {}
+                saver.accept(value);
+            }
+        });
+
+        edit.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                int value = 0;
+                try {
+                    String t = edit.getText().toString().trim();
+                    if (!t.isEmpty()) value = Integer.parseInt(t);
+                } catch (NumberFormatException ignored) {}
+                saver.accept(value);
+            }
+        });
+    }
+
 
     private boolean hasDndAccess() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return true;
@@ -238,10 +307,14 @@ if (enabled) {
     }
     private void setupGoalsSettings() {
         EditText goalEdit = findViewById(R.id.edit_daily_goal_minutes);
+        EditText longTermGoalEdit = findViewById(R.id.edit_long_term_goal_minutes);
 
+        // init
         int goal = AppSettings.getDailyGoalMinutes(this);
-
         goalEdit.setText(String.valueOf(goal));
+
+        int longGoal = AppSettings.getLongTermGoalMinutes(this);
+        longTermGoalEdit.setText(String.valueOf(longGoal));
 
         goalEdit.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -255,13 +328,46 @@ if (enabled) {
 
                 if (v < 5) v = 5;
                 if (v > 180) v = 180;
+
                 AppSettings.setDailyGoalMinutes(getApplicationContext(), v);
-
                 Log.d("GoalDebug", "Settings saved goal=" + AppSettings.getDailyGoalMinutes(SettingsActivity.this));
+            }
+        });
 
+        longTermGoalEdit.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override public void afterTextChanged(Editable s) {
+                int v = 60;
+                try {
+                    String t = s.toString().trim();
+                    if (!t.isEmpty()) v = Integer.parseInt(t);
+                } catch (NumberFormatException ignored) {}
+
+                if (v < 5) v = 5;
+                if (v > 180) v = 180;
+
+                AppSettings.setLongTermGoalMinutes(getApplicationContext(), v);
+                Log.d("GoalDebug", "Settings saved longTermGoal=" + AppSettings.getLongTermGoalMinutes(SettingsActivity.this));
+            }
+        });
+
+        // Optional safety-net: clamp + write-back on focus loss (wie bei countdown)
+        longTermGoalEdit.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                int clamped = AppSettings.getLongTermGoalMinutes(SettingsActivity.this);
+                longTermGoalEdit.setText(String.valueOf(clamped));
+            }
+        });
+
+        goalEdit.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                int clamped = AppSettings.getDailyGoalMinutes(SettingsActivity.this);
+                goalEdit.setText(String.valueOf(clamped));
             }
         });
     }
+
 
     private void setupManagePracticesSettings() {
         findViewById(R.id.button_create_practice).setOnClickListener(v -> {
@@ -284,7 +390,7 @@ if (enabled) {
             startActivity(intent);
         });
 
-        findViewById(R.id.button_back_manage_practices).setOnClickListener(v -> showSubPage(null));
+     //   findViewById(R.id.button_back_manage_practices).setOnClickListener(v -> showSubPage(null));
     }
     @Override
     protected void onResume() {
@@ -297,11 +403,15 @@ if (enabled) {
                 if (switchDnd != null) switchDnd.setChecked(true);
             }
         } else {
-            // keep UI in sync if user changed permission outside
             if (switchDnd != null) {
                 boolean dndOn = AppSettings.isDndEnabled(this);
                 switchDnd.setChecked(dndOn);
             }
+        }
+
+        if (practiceContainer != null && practiceContainer.getVisibility() == View.VISIBLE && practicePager != null) {
+            practicePager.computePages();
+            practicePager.showPage(practicePager.getCurrentPage());
         }
     }
 
@@ -323,15 +433,25 @@ if (enabled) {
                 .show();
         });
 
-        findViewById(R.id.button_back_system).setOnClickListener(v -> showSubPage(null));
-    }
+     //   findViewById(R.id.button_back_system).setOnClickListener(v -> showSubPage(null));
+        Button btnShowList = findViewById(R.id.button_show_last_practices);
 
+
+        btnShowList.setOnClickListener(v -> {
+            Intent intent = new Intent(this, SessionListActivity.class);
+            startActivity(intent);
+        });
+    }
+    public void showMainSettingsMenuFromFooter() {
+        showSubPage(null); // your existing method that shows main menu
+    }
     private void showSubPage(View subPageToShow) {
         mainMenu.setVisibility(subPageToShow == null ? View.VISIBLE : View.GONE);
         languageContainer.setVisibility(subPageToShow == languageContainer ? View.VISIBLE : View.GONE);
         practiceContainer.setVisibility(subPageToShow == practiceContainer ? View.VISIBLE : View.GONE);
         managePracticesContainer.setVisibility(subPageToShow == managePracticesContainer ? View.VISIBLE : View.GONE);
         systemContainer.setVisibility(subPageToShow == systemContainer ? View.VISIBLE : View.GONE);
+        goalsContainer.setVisibility(subPageToShow == goalsContainer ? View.VISIBLE : View.GONE);
 
         if (subPageToShow == null) {
             headerText.setText(R.string.einstellungen);
@@ -343,20 +463,27 @@ if (enabled) {
             headerText.setText(R.string.manage_practices);
         } else if (subPageToShow == systemContainer) {
             headerText.setText(R.string.settings_system);
+        } else if (subPageToShow == goalsContainer) {
+            headerText.setText(R.string.goals); // add a string, or keep "Goals"
+        }
+        if (subPageToShow == practiceContainer && practicePager != null) {
+            practicePager.computePagesAfterLayoutAndShow();
         }
     }
+
 
     private void recreateApp() {
         Intent intent = new Intent(this, MeditationActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+
         finish();
     }
 
     @Override
     public void onBackPressed() {
-        if (goalsContainer != null && goalsContainer.getVisibility() == View.VISIBLE) {
-            showMainSettingsPage();
+        if (mainMenu != null && mainMenu.getVisibility() != View.VISIBLE) {
+            showSubPage(null);
         } else {
             super.onBackPressed();
         }
