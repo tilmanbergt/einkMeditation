@@ -1,35 +1,46 @@
-# Bodhisattva Friend (Android)
-
-A minimalist meditation companion designed for **consistency, kindness, and clarity**—especially on **e‑ink** devices.
-
-The core idea: make it *easy to practice today*, and make progress feel *warm and motivating* without turning practice into “performance”.
-
----
-
 ## Philosophy
 
-This app is guided by a few simple principles:
+This app is guided by the following principles:
 
-- **Small wins matter.** If you sat today, that’s a win.
-- **Restarting is a skill.** The UI should be especially supportive after a pause.
-- **Simple feedback beats dashboards.** A few meaningful signals (today / recent average / streak) are enough.
-- **Encouragement > judgment.** When you’re on track, you get a thumbs‑up. When you’re off track, you get a gentle, doable next step.
 - **E‑ink friendly.** Minimal animations, paging instead of fast scrolling, high contrast.
+- **Simplicity and minimal UI** reduced UI and minimal feature set
+- **Distraction Free** the core features are centered around making the meditation experience itself as calm and distraction free as possible (turn of backlight, adjustable signals, minimum movement on the screen).
+- **Simple feedback beats dashboards.** A few meaningful signals (today / recent average / streak) are enough.
+- **Encouragement > judgment.** The App is intended to help focus on what went well and what is possible.
 
 ---
 
-## Features (current direction)
+## Features
 
-- Meditation timer with start/end cues
-- History overview with:
+- Meditation timer
+    - with start/end cues (bell / vibrartion / light flashing)
+    - turn background light off during meditation
+    - hide meditation time display during meditation
+    - adjustable pre-meditation countdown
+    - allow additional time to be tracked (or not)
+    - use predefined meditation times or adjust to any time (minutes)
+- Practice overview with:
   - “Today”
   - “7‑day horizon” (restart-aware, may show fewer days)
   - “30‑day horizon” (only shown when meaningful)
   - motivating headline + suggestion for today
   - streak tracking
-- Session list with **paging** and manual **add/delete** (useful for sesshins and testing)
+- Session list with **paging** and manual **add/delete** (useful for meditation retreats)
+- general features
+  - supports English and German language
+  - you can set your own long term and short term goals, the app will use the to provide you with meaningfull feedback and suggestions.
 
+## Developer and Support
+This is developed as a personal project by Tilman Bergt
+
+## Intended Features
+- allow interval bells (e.g. a bell every 10 minutes during a meditation session)
+
+Major evolutions
+- allow custom practices presets (default time, sound settings etc.) to be defined and saved
 ---
+
+
 
 ## Install / Build
 
@@ -40,7 +51,7 @@ This app is guided by a few simple principles:
 ### Build & run
 1. Clone:
    ```bash
-   git clone https://github.com/tilmanbergt/bodhisattva-friend.git
+   git clone https://github.com/tilmanbergteinkMeditation.git
    ```
 2. Open in Android Studio
 3. Let Gradle sync finish
@@ -77,19 +88,10 @@ See: [`docs/git-workflow.md`](docs/git-workflow.md)
   - History screen: renders key metrics + headline + suggestion
   - Session list: paged list, add/delete sessions
 
-The intent is to keep computation in small, testable methods (≈ 10 lines each where possible),
-so edge cases can be validated and refined over time.
-
+Note: there are some classes and activities currently not used or underused (particularly around practices). I intended to later use them to introduce new features.
 ---
 
-## Using ChatGPT with the GitHub app/connector
-
-If you connect GitHub as an “app” inside ChatGPT, you can ask questions about this repo
-without pasting files. See: [`docs/chatgpt-github-app.md`](docs/chatgpt-github-app.md)
-
----
-
-## Contributing (future-friendly)
+## Contributing
 
 This project is still evolving. If you want to contribute later:
 - open an issue with observations (especially UX, motivation, e‑ink constraints)
@@ -99,4 +101,4 @@ This project is still evolving. If you want to contribute later:
 
 ## License
 
-TBD. (Decide before inviting external contributors.)
+TBD.
