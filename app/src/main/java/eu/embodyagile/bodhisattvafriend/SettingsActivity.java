@@ -30,7 +30,9 @@ import eu.embodyagile.bodhisattvafriend.helper.LocaleHelper;
 import eu.embodyagile.bodhisattvafriend.helper.PagedListController;
 import eu.embodyagile.bodhisattvafriend.history.MeditationInsightsRepository;
 import eu.embodyagile.bodhisattvafriend.settings.AppSettings;
-
+import android.net.Uri;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 public class SettingsActivity extends BaseActivity {
 
     private SwitchCompat switchDnd;
@@ -434,13 +436,58 @@ if (enabled) {
         });
 
      //   findViewById(R.id.button_back_system).setOnClickListener(v -> showSubPage(null));
-        Button btnShowList = findViewById(R.id.button_show_last_practices);
+        TextView btnShowList = findViewById(R.id.button_show_last_practices);
 
 
         btnShowList.setOnClickListener(v -> {
             Intent intent = new Intent(this, SessionListActivity.class);
             startActivity(intent);
         });
+        TextView tvInfo = findViewById(R.id.tv_system_info);
+        if (tvInfo != null) {
+            String info = "Author: Tilman Bergt\n" +
+                    "App ID: " + BuildConfig.APPLICATION_ID + "\n" +
+                            "Version: " + BuildConfig.VERSION_NAME + " (Code: " + BuildConfig.VERSION_CODE+ "/" +   "Build: " + BuildConfig.BUILD_TYPE  +  ")\n" +
+                    "Device: " + Build.MANUFACTURER + " " + Build.MODEL + " / " +
+                            "Android: " + Build.VERSION.RELEASE;
+
+            tvInfo.setText(info);
+
+            // Optional: tap to copy
+            tvInfo.setOnLongClickListener(v -> {
+                ClipboardManager cm = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                if (cm != null) {
+                    cm.setPrimaryClip(ClipData.newPlainText("System info", info));
+                    Toast.makeText(this, "Copied", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            });
+        }
+
+        final String githubUrl = "https://github.com/tilmanbergt/einkMeditation";
+        final String issuesUrl = githubUrl + "/issues";
+        final String donateUrl = "https://buymeacoffee.com/nmx3st1m9l"; // or whatever you prefer
+
+        View btnGitHub = findViewById(R.id.button_open_github);
+        if (btnGitHub != null) {
+            btnGitHub.setOnClickListener(v ->
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(githubUrl)))
+            );
+        }
+
+        View btnBug = findViewById(R.id.button_report_bug);
+        if (btnBug != null) {
+            btnBug.setOnClickListener(v ->
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(issuesUrl)))
+            );
+        }
+
+        View btnDonate = findViewById(R.id.button_donate);
+        if (btnDonate != null) {
+            btnDonate.setOnClickListener(v ->
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(donateUrl)))
+            );
+        }
     }
     public void showMainSettingsMenuFromFooter() {
         showSubPage(null); // your existing method that shows main menu

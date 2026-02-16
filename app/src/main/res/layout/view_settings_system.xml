@@ -6,20 +6,54 @@
     android:orientation="vertical"
     android:visibility="gone">
 
+
+
+    <TextView
+        android:id="@+id/tv_system_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textSize="14sp"
+        android:textIsSelectable="true"
+        android:text="System info"
+        android:lineSpacingExtra="2dp" />
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <TextView
+        style="@style/TextLinkButton"
+        android:id="@+id/button_open_github"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="GitHub" />
+
+    <TextView
+        style="@style/TextLinkButton"
+        android:id="@+id/button_report_bug"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Report a bug" />
+
+    <TextView
+        style="@style/TextLinkButton"
+        android:id="@+id/button_donate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Donate" />
+</LinearLayout>
+
     <TextView
         style="@style/TextLinkButton"
         android:id="@+id/button_reset_practices"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
         android:layout_width="match_parent"
         android:text="@string/reset_practices_to_default" /> <!-- <TextView android:id="@+id/button_edit_vow" style="@style/MainTextButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/gel_bde_bearbeiten" /> -->
-    <Button
-        style="@style/ActionButton"
+    <TextView
+        style="@style/TextLinkButton"
         android:id="@+id/button_show_last_practices"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:layout_width="match_parent"
         android:text="@string/zeige_letzte_praxen" />
-
 
 </LinearLayout>

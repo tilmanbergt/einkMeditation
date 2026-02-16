@@ -1,0 +1,48 @@
+name: Release (APK + AAB)
+
+on:
+  push:
+    tags:
+      - "v*.*"
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: gradle   # optional but recommended
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Decode keystore
+        run: |
+          echo "${{ secrets.ANDROID_KEYSTORE_B64 }}" | base64 -d > release.jks
+
+      - name: Build signed APK + AAB
+        env:
+          SIGNING_STORE_FILE: ${{ github.workspace }}/release.jks
+          SIGNING_STORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          SIGNING_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          ./gradlew --no-daemon clean :app:assembleRelease :app:bundleRelease
+
+      - name: Create GitHub Release and upload artifacts
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            app/build/outputs/apk/release/*.apk
+            app/build/outputs/bundle/release/*.aab
