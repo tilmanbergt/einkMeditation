@@ -15,6 +15,10 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
+
 import eu.embodyagile.bodhisattvafriend.data.PracticeRepository;
 import eu.embodyagile.bodhisattvafriend.data.SessionState;
 import eu.embodyagile.bodhisattvafriend.helper.CandleUiController;
@@ -121,8 +125,19 @@ public class MeditationActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_meditation);
+        // WICHTIG: vor setContentView
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
 
+        setContentView(R.layout.activity_meditation);
+        WindowInsetsControllerCompat controller =
+                WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
+
+        if (controller != null) {
+            controller.hide(WindowInsetsCompat.Type.systemBars());
+            controller.setSystemBarsBehavior(
+                    WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            );
+        }
         // Intents einlesen
         fromPomodoro = getIntent().getBooleanExtra(EXTRA_FROM_POMODORO, false);
         int minutes = getIntent().getIntExtra(EXTRA_SELECTED_MINUTES, -1);
