@@ -1,14 +1,11 @@
 package eu.embodyagile.bodhisattvafriend;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -28,7 +25,6 @@ import java.util.List;
 import eu.embodyagile.bodhisattvafriend.data.PracticeRepository;
 import eu.embodyagile.bodhisattvafriend.helper.LocaleHelper;
 import eu.embodyagile.bodhisattvafriend.helper.PagedListController;
-import eu.embodyagile.bodhisattvafriend.history.MeditationInsightsRepository;
 import eu.embodyagile.bodhisattvafriend.settings.AppSettings;
 import android.net.Uri;
 import android.content.ClipData;
@@ -135,6 +131,19 @@ if (enabled) {
                 recreateApp();
             }
         });
+        View frameRow = findViewById(R.id.row_background_frame);
+        if (frameRow != null) {
+            TextView label = frameRow.findViewById(R.id.row_label);
+            SwitchCompat sw = frameRow.findViewById(R.id.row_switch);
+
+            label.setText(R.string.show_background_frame);
+            sw.setChecked(AppSettings.isBackgroundFrameEnabled(this));
+
+            sw.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                AppSettings.setBackgroundFrameEnabled(this, isChecked);
+                recreate();
+            });
+        }
 
     //    findViewById(R.id.button_back_language).setOnClickListener(v -> showSubPage(null));
     }
@@ -157,6 +166,17 @@ if (enabled) {
         countdownEdit.setText(String.valueOf(countdown));
         bindNumberInstant(countdownEdit, value ->
                 AppSettings.setPremeditationCountdownSec(getApplicationContext(), value)
+        );
+        SwitchCompat intervalBell = createSwitchRow(getString(R.string.interval_bell_enabled));
+        intervalBell.setChecked(AppSettings.isIntervalBellEnabled(this));
+        intervalBell.setOnCheckedChangeListener((btn, isChecked) ->
+                AppSettings.setIntervalBellEnabled(this, isChecked)
+        );
+
+        EditText intervalMinutes = createNumberRow(getString(R.string.interval_bell_minutes));
+        intervalMinutes.setText(String.valueOf(AppSettings.getIntervalBellMinutes(this)));
+        bindNumberInstant(intervalMinutes, value ->
+                AppSettings.setIntervalBellMinutes(getApplicationContext(), value)
         );
 
         // --- Feedback ---
@@ -308,10 +328,36 @@ if (enabled) {
         startActivity(new Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS));
     }
     private void setupGoalsSettings() {
-        EditText goalEdit = findViewById(R.id.edit_daily_goal_minutes);
-        EditText longTermGoalEdit = findViewById(R.id.edit_long_term_goal_minutes);
+        View dailyRow = findViewById(R.id.row_daily_goal_minutes);
+        View longTermRow = findViewById(R.id.row_long_term_goal_minutes);
 
-        // init
+        EditText goalEdit;
+        EditText longTermGoalEdit;
+
+        if (dailyRow != null) {
+            TextView label = dailyRow.findViewById(R.id.row_label);
+            goalEdit = dailyRow.findViewById(R.id.row_edit);
+
+            label.setText(R.string.daily_intention_avg_minutes);
+            goalEdit.setHint("60");
+            goalEdit.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
+        } else {
+            goalEdit = null;
+        }
+
+        if (longTermRow != null) {
+            TextView label = longTermRow.findViewById(R.id.row_label);
+            longTermGoalEdit = longTermRow.findViewById(R.id.row_edit);
+
+            label.setText(R.string.long_term_direction_minutes);
+            longTermGoalEdit.setHint("60");
+            longTermGoalEdit.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
+        } else {
+            longTermGoalEdit = null;
+        }
+
+        if (goalEdit == null || longTermGoalEdit == null) return;
+
         int goal = AppSettings.getDailyGoalMinutes(this);
         goalEdit.setText(String.valueOf(goal));
 
@@ -354,7 +400,6 @@ if (enabled) {
             }
         });
 
-        // Optional safety-net: clamp + write-back on focus loss (wie bei countdown)
         longTermGoalEdit.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
                 int clamped = AppSettings.getLongTermGoalMinutes(SettingsActivity.this);
@@ -368,6 +413,30 @@ if (enabled) {
                 goalEdit.setText(String.valueOf(clamped));
             }
         });
+
+        View startSuggestionsRow = findViewById(R.id.row_start_suggestions);
+        if (startSuggestionsRow != null) {
+            TextView label = startSuggestionsRow.findViewById(R.id.row_label);
+            SwitchCompat sw = startSuggestionsRow.findViewById(R.id.row_switch);
+
+            label.setText(R.string.show_suggestions_on_start_screen);
+            sw.setChecked(AppSettings.isStartSuggestionsEnabled(this));
+            sw.setOnCheckedChangeListener((buttonView, isChecked) ->
+                    AppSettings.setStartSuggestionsEnabled(this, isChecked)
+            );
+        }
+
+        View streakInfoRow = findViewById(R.id.row_show_streak_info);
+        if (streakInfoRow != null) {
+            TextView label = streakInfoRow.findViewById(R.id.row_label);
+            SwitchCompat sw = streakInfoRow.findViewById(R.id.row_switch);
+
+            label.setText(R.string.show_streak_information);
+            sw.setChecked(AppSettings.isStreakInfoEnabled(this));
+            sw.setOnCheckedChangeListener((buttonView, isChecked) ->
+                    AppSettings.setStreakInfoEnabled(this, isChecked)
+            );
+        }
     }
 
 
@@ -503,7 +572,7 @@ if (enabled) {
         if (subPageToShow == null) {
             headerText.setText(R.string.einstellungen);
         } else if (subPageToShow == languageContainer) {
-            headerText.setText(R.string.settings_language);
+            headerText.setText(R.string.settings_display);
         } else if (subPageToShow == practiceContainer) {
             headerText.setText(R.string.settings_practice);
         } else if (subPageToShow == managePracticesContainer) {

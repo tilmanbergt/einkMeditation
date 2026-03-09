@@ -36,7 +36,8 @@
     <string name="history_streak_start">Start a new streak.</string>
     <string name="history_streak_start_best">Start a new streak. Best: %1$d days</string>
 
-
+    <string name="settings_display_subheading">Display</string>
+    <string name="show_background_frame">Show background frame</string>
 
     <string name="app_name">einkMeditation</string>
 <string name="ziel">Goal</string>
@@ -124,7 +125,7 @@
     <string name="reset_practices_to_default">Reset practices to default</string>
     <string name="reset_practices_dialog_message">Are you sure you want to delete all your custom practices and reset to the default set?</string>
     <string name="practices_reset_toast">Practices reset to default</string>
-    <string name="settings_language">Language</string>
+    <string name="settings_display">Display</string>
     <string name="settings_practice">Practice</string>
     <string name="settings_system">System</string>
     <string name="back">Back</string>
@@ -170,4 +171,11 @@
     <string name="settings_heading_timing">Timing</string>
     <string name="settings_heading_feedback">Feedback</string>
     <string name="settings_heading_focus">Focus</string>
+
+    <string name="show_suggestions_on_start_screen">Show suggestions on start screen</string>
+    <string name="show_streak_information">Show streak information</string>
+    <string name="interval_bell_enabled">Interval bell</string>
+    <string name="interval_bell_minutes">Interval bell every (minutes)</string>
+    <string name="daily_intention_avg_minutes">Daily intention (avg minutes)</string>
+    <string name="long_term_direction_minutes">Long-term direction (minutes)</string>
 </resources>

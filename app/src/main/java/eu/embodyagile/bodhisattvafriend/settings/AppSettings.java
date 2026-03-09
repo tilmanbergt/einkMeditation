@@ -10,6 +10,15 @@ public final class AppSettings {
 
     private AppSettings() {}
 
+    public static final String KEY_SHOW_START_SUGGESTIONS = "show_start_suggestions";
+    public static final String KEY_SHOW_STREAK_INFO = "show_streak_info";
+
+    public static final String KEY_INTERVAL_BELL_ENABLED = "interval_bell_enabled";
+    public static final String KEY_INTERVAL_BELL_MINUTES = "interval_bell_minutes";
+
+    private static final int DEFAULT_INTERVAL_BELL_MINUTES = 5;
+    private static final int MIN_INTERVAL_BELL_MINUTES = 1;
+    private static final int MAX_INTERVAL_BELL_MINUTES = 120;
     // ✅ single source of truth
     public static final String PREFS_NAME = "bodhisattva_friend_prefs";
 
@@ -28,7 +37,7 @@ public final class AppSettings {
     public static final String KEY_VIBRATION_ON_START_END = "vibration_on_start_end";
 
     private static final String KEY_LAST_DURATION_PREFIX = "last_duration_";
-
+    public static final String KEY_SHOW_BACKGROUND_FRAME = "show_background_frame";
     // --- Defaults / bounds ---
     private static final int DEFAULT_DAILY_GOAL_MINUTES = 60;
     public static final int DEFAULT_LONG_TERM_GOAL_MINUTES = DEFAULT_DAILY_GOAL_MINUTES;
@@ -124,6 +133,14 @@ public final class AppSettings {
         getPrefs(ctx).edit().putBoolean(KEY_DIM_DURING_MEDITATION, enabled).apply();
     }
 
+    public static boolean isBackgroundFrameEnabled(Context c) {
+        return prefs(c).getBoolean(KEY_SHOW_BACKGROUND_FRAME, true);
+    }
+
+    public static void setBackgroundFrameEnabled(Context c, boolean enabled) {
+        prefs(c).edit().putBoolean(KEY_SHOW_BACKGROUND_FRAME, enabled).apply();
+    }
+
     // ---------------------------
     // Last-used duration per practice
     // ---------------------------
@@ -160,7 +177,41 @@ public final class AppSettings {
         prefs(c).edit().putInt(KEY_LONG_TERM_GOAL_MINUTES, v).apply();
     }
 
-    public static boolean isMeditationSetupSuggestionModeDefault(MeditationSetupActivity meditationSetupActivity) {
-    return true;
+    public static boolean isMeditationSetupSuggestionModeDefault(Context context) {
+        return isStartSuggestionsEnabled(context);
+    }
+
+    public static boolean isIntervalBellEnabled(Context c) {
+        return prefs(c).getBoolean(KEY_INTERVAL_BELL_ENABLED, false);
+    }
+
+    public static void setIntervalBellEnabled(Context c, boolean enabled) {
+        prefs(c).edit().putBoolean(KEY_INTERVAL_BELL_ENABLED, enabled).apply();
+    }
+
+    public static int getIntervalBellMinutes(Context c) {
+        int v = prefs(c).getInt(KEY_INTERVAL_BELL_MINUTES, DEFAULT_INTERVAL_BELL_MINUTES);
+        return clamp(v, MIN_INTERVAL_BELL_MINUTES, MAX_INTERVAL_BELL_MINUTES);
+    }
+
+    public static void setIntervalBellMinutes(Context c, int minutes) {
+        int v = clamp(minutes, MIN_INTERVAL_BELL_MINUTES, MAX_INTERVAL_BELL_MINUTES);
+        prefs(c).edit().putInt(KEY_INTERVAL_BELL_MINUTES, v).apply();
+    }
+
+    public static boolean isStartSuggestionsEnabled(Context c) {
+        return prefs(c).getBoolean(KEY_SHOW_START_SUGGESTIONS, true);
+    }
+
+    public static void setStartSuggestionsEnabled(Context c, boolean enabled) {
+        prefs(c).edit().putBoolean(KEY_SHOW_START_SUGGESTIONS, enabled).apply();
+    }
+
+    public static boolean isStreakInfoEnabled(Context c) {
+        return prefs(c).getBoolean(KEY_SHOW_STREAK_INFO, true);
+    }
+
+    public static void setStreakInfoEnabled(Context c, boolean enabled) {
+        prefs(c).edit().putBoolean(KEY_SHOW_STREAK_INFO, enabled).apply();
     }
 }

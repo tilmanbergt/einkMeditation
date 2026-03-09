@@ -10,7 +10,7 @@
         style="@style/MainTextButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/settings_language" />
+        android:text="@string/settings_display" />
 
     <TextView
         android:id="@+id/button_practice_settings"

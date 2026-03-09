@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import androidx.annotation.LayoutRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import eu.embodyagile.bodhisattvafriend.helper.LocaleHelper;
+import eu.embodyagile.bodhisattvafriend.settings.AppSettings;
 
 public abstract class BaseActivity extends AppCompatActivity {
     @Override
@@ -17,6 +20,52 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public enum FooterTab {HISTORY, PRACTICE, SETTINGS}
+    @Override
+    public void setContentView(@LayoutRes int layoutResID) {
+        super.setContentView(layoutResID);
+        applyDisplaySettingsToRoot();
+    }
+
+    @Override
+    public void setContentView(View view) {
+        super.setContentView(view);
+        applyDisplaySettingsToRoot();
+    }
+
+    @Override
+    public void setContentView(View view, ViewGroup.LayoutParams params) {
+        super.setContentView(view, params);
+        applyDisplaySettingsToRoot();
+    }
+
+    protected void applyDisplaySettingsToRoot() {
+        ViewGroup content = findViewById(android.R.id.content);
+        if (content == null || content.getChildCount() == 0) return;
+
+        View root = content.getChildAt(0);
+        if (root == null) return;
+
+        if (AppSettings.isBackgroundFrameEnabled(this)) {
+            root.setBackgroundResource(R.drawable.bg_frame_vintage);
+
+            int left = getResources().getDimensionPixelSize(R.dimen.frame_padding_left);
+            int top = getResources().getDimensionPixelSize(R.dimen.frame_padding_top);
+            int right = getResources().getDimensionPixelSize(R.dimen.frame_padding_right);
+            int bottom = getResources().getDimensionPixelSize(R.dimen.frame_padding_bottom);
+
+            root.setPadding(left, top, right, bottom);
+        } else {
+            root.setBackground(null);
+            int left = getResources().getDimensionPixelSize(R.dimen.frame_padding_left);
+            int top = getResources().getDimensionPixelSize(R.dimen.frame_padding_top);
+            int right = getResources().getDimensionPixelSize(R.dimen.frame_padding_right);
+            int bottom = getResources().getDimensionPixelSize(R.dimen.frame_padding_bottom);
+
+            root.setPadding(left, top, right, bottom);
+        }
+    }
+
+
 
     protected void setupFooter(FooterTab current) {
         Log.d("Footer", "Current: " + current);

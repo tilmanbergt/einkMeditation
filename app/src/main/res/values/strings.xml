@@ -31,6 +31,8 @@
     <string name="history_suggest_adapt_goal">Du bist seit 30 Tagen sehr weit von deinem Ziel. Passe es erstmal an.</string>
     <string name="history_suggest_wash_bowls">Super! Meditation ist nicht dein Problem – geh deine Schalen waschen!</string>
 
+    <string name="settings_display_subheading">Anzeige</string>
+    <string name="show_background_frame">Hintergrundrahmen anzeigen</string>
 
     <string name="history_label_today">Heute</string>
     <string name="history_label_days">%1$d Tage</string>
@@ -40,9 +42,11 @@
 
     <string name="history_restart_week_message">Super! Du bist wieder da.</string>
     <string name="history_restart_month_message">Willkommen zurück.</string>
-
+    <string name="show_suggestions_on_start_screen">Vorschläge auf Startbildschirm anzeigen</string>
+    <string name="show_streak_information">Streak-Informationen anzeigen</string>
     <string name="history_first_day_short">Guter Start.</string>
-
+    <string name="interval_bell_enabled">Intervallglocke</string>
+    <string name="interval_bell_minutes">Intervallglocke alle (Minuten)</string>
 
     <string name="history_streak_days">Serie: %1$d Tage</string>
     <string name="history_streak_start">Starte eine neue Serie.</string>
@@ -60,7 +64,8 @@
     <string name="vorschlag_heute">Vorschlag heute</string>
     <string name="erster_tag_verlauf">Erster Tag im Verlauf – weiter so!</string>
     <string name="beste_serie">Beste Serie</string>
-
+    <string name="daily_intention_avg_minutes">Tägliches Ziel (Minuten)</string>
+    <string name="long_term_direction_minutes">Langfristiges Ziel (Minuten)</string>
     <!-- History Screen -->
     <string name="history_title">Danke, dass du geübt hast.</string>
     <string name="history_message">
@@ -139,7 +144,7 @@
     <string name="reset_practices_to_default">Praxen auf Standard zurücksetzen</string>
     <string name="reset_practices_dialog_message">Bist du sicher, dass du alle deine eigenen Praxen löschen und auf die Standardeinstellungen zurücksetzen möchtest?</string>
     <string name="practices_reset_toast">Praxen auf Standard zurückgesetzt</string>
-    <string name="settings_language">Sprache</string>
+    <string name="settings_display">Darstellung</string>
     <string name="settings_practice">Praxis</string>
     <string name="settings_system">System</string>
     <string name="back">Zurück</string>

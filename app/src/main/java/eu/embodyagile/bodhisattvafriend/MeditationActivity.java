@@ -2,6 +2,7 @@ package eu.embodyagile.bodhisattvafriend;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
+import eu.embodyagile.bodhisattvafriend.helper.IntervalBellController;
 
 import android.app.NotificationManager;
 import android.content.Intent;
@@ -42,6 +43,7 @@ public class MeditationActivity extends BaseActivity {
     private boolean useDndDuringSession = true;
     private DndController dnd;
     private MeditationAudioController audio;
+    private IntervalBellController intervalBell;
     private CandleUiController candleUi;
 
 
@@ -154,6 +156,8 @@ public class MeditationActivity extends BaseActivity {
         dnd = new DndController(this, (NotificationManager) getSystemService(NOTIFICATION_SERVICE));
         audio = new MeditationAudioController(this);
         candleUi = new CandleUiController(this);
+        intervalBell = new IntervalBellController(this);
+
         candleUi.setDimmer(new CandleUiController.Dimmer() {
             @Override
             public void setDim(boolean dark) {
@@ -251,15 +255,18 @@ public class MeditationActivity extends BaseActivity {
             preMeditationTimer.cancel();
             preMeditationTimer = null;
         }
+
+        if (intervalBell != null) {
+            intervalBell.stop();
+        }
+
         cleanupSessionEffects();
 
-
         if (fromPomodoro) {
-            finish(); // zurück zu Pomodoro
+            finish();
             return;
         }
 
-        // sonst zurück ins Setup
         Intent i = new Intent(this, MeditationSetupActivity.class);
         i.putExtra(MeditationSetupActivity.EXTRA_PRACTICE_ID, practice.getId());
         i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -327,19 +334,23 @@ public class MeditationActivity extends BaseActivity {
             session.pause();
             pauseTimerUI();
             if (playAudio && audio.isUsableForPauseResume()) audio.pauseIfPlaying();
+            if (intervalBell != null) intervalBell.stop();
             return;
         }
 
         if (session.isPaused()) {
-            session.resume();              // <- statt start()
+            session.resume();
             startTimerUI(false);
             if (playAudio && audio.isUsableForPauseResume()) audio.resumeIfPossible();
+            if (intervalBell != null) {
+                long elapsedMeditationMs = session.baseDurationSeconds() * 1000L;
+                intervalBell.resumeFromElapsedIfEnabled(elapsedMeditationMs);
+            }
         }
     }
 
 
     private void onEndClicked() {
-        // nur reagieren, wenn jemals gestartet wurde
         if (!session.isRunning() && !session.isPaused()) {
             return;
         }
@@ -349,10 +360,14 @@ public class MeditationActivity extends BaseActivity {
             timer = null;
         }
 
+        if (intervalBell != null) {
+            intervalBell.stop();
+        }
+
         session.finishEarly();
 
         if (fromPomodoro) {
-            saveAndFinishPomodoroSession(); // early end
+            saveAndFinishPomodoroSession();
         } else {
             onSessionFinished();
         }
@@ -483,7 +498,9 @@ public class MeditationActivity extends BaseActivity {
 
 
     private void setupOvertimeTimerIfNeeded() {
-        if (!session.canOvertime()) return;
+        if (!session.canOvertime()) {
+                return;
+        }
 
         if (overtimeTimer != null) {
             overtimeTimer.cancel();
@@ -587,13 +604,19 @@ public class MeditationActivity extends BaseActivity {
         cancelButton.setVisibility(GONE);
         pauseContinueButton.setVisibility(fromPomodoro ? GONE : VISIBLE);
         pauseContinueButton.setText(getString(R.string.pause));
+
         if (playAudio) audio.start(practice);
 
         candleUi.setFeatureEnabled(featureCandleTimer);
         candleUi.onMeditationStart();
 
-        session.start();           // nur beim echten Start
+        session.start();           // echter Startmoment nach Pretimer
         startTimerUI(signalStart);
+
+        if (intervalBell != null) {
+            long plannedDurationMs = session.plannedMinutes() * 60L * 1000L;
+            intervalBell.startIfEnabled(plannedDurationMs);
+        }
     }
 
     private void onSessionFinished() {
@@ -601,20 +624,31 @@ public class MeditationActivity extends BaseActivity {
             timer.cancel();
             timer = null;
         }
+
+
+
         signalStartEnd();
-        cleanupSessionEffects();
+
+
         if (fromPomodoro) {
             saveAndFinishPomodoroSession();
+            cleanupSessionEffects();
             return;
         }
-        switchMode(Mode.SUMMARY);
 
+        switchMode(Mode.SUMMARY);
+        if (!session.canOvertime()) {
+            if (intervalBell != null) {
+                intervalBell.stop();
+            }
+        }
         setupOvertimeTimerIfNeeded();
         updateDurationsText();
     }
 
 
     private void cleanupSessionEffects() {
+        if (intervalBell != null) intervalBell.stop();
         if (dnd != null) dnd.restoreIfChanged();
         if (candleUi != null) candleUi.cleanup();
         if (dimDuringMeditation) lightAndSoundHelper.setMeditationDarkMode(false, this, this);

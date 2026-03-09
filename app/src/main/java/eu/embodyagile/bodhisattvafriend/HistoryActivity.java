@@ -186,15 +186,21 @@ public class HistoryActivity extends BaseActivity {
         }
 
 
-        // --- Streak row ---
-        if (i.currentStreakDays >= 2) {
-            tvStreak.setText(getString(R.string.history_streak_days, i.currentStreakDays));
-        } else if (i.streakEndedYesterday && i.yesterdayStreakDays >= 2) {
-            tvStreak.setText(getString(R.string.history_streak_continue_today, i.yesterdayStreakDays));
-        } else if (i.bestStreakDays >= 2) {
-            tvStreak.setText(getString(R.string.history_streak_start_best, i.bestStreakDays));
+        if (AppSettings.isStreakInfoEnabled(this)) {
+            tvStreak.setVisibility(View.VISIBLE);
+
+            if (i.currentStreakDays >= 2) {
+                tvStreak.setText(getString(R.string.history_streak_days, i.currentStreakDays));
+            } else if (i.streakEndedYesterday && i.yesterdayStreakDays >= 2) {
+                tvStreak.setText(getString(R.string.history_streak_continue_today, i.yesterdayStreakDays));
+            } else if (i.bestStreakDays >= 2) {
+                tvStreak.setText(getString(R.string.history_streak_start_best, i.bestStreakDays));
+            } else {
+                tvStreak.setText(getString(R.string.history_streak_start));
+            }
         } else {
-            tvStreak.setText(getString(R.string.history_streak_start));
+            tvStreak.setText("");
+            tvStreak.setVisibility(View.GONE);
         }
 
     }

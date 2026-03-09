@@ -5,6 +5,12 @@
     android:orientation="vertical"
     android:visibility="gone">
 
+    <TextView
+        style="@style/NormalText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_display" />
+
     <RadioGroup
         android:id="@+id/langRadioGroup"
         android:layout_width="wrap_content"
@@ -29,5 +35,10 @@
             android:text="English" />
     </RadioGroup>
 
+
+
+    <include
+        android:id="@+id/row_background_frame"
+        layout="@layout/row_switch" />
 
 </LinearLayout>

@@ -24,7 +24,7 @@
 
         <include
             android:id="@+id/settings_language_container"
-            layout="@layout/view_settings_language" />
+            layout="@layout/view_settings_display" />
 
         <include
             android:id="@+id/settings_practice_container"
