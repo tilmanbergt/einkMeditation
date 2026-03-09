@@ -4,7 +4,7 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
 
-    <!-- Rounded square border: more inset, thinner, softer corners -->
+    <!-- Rounded square border -->
     <path
         android:fillColor="@android:color/transparent"
         android:strokeColor="#000000"
@@ -12,34 +12,54 @@
         android:strokeLineJoin="round"
         android:strokeLineCap="round"
         android:pathData="M30,22
-                      H78
-                      Q86,22 86,30
-                      V78
-                      Q86,86 78,86
-                      H30
-                      Q22,86 22,78
-                      V30
-                      Q22,22 30,22
-                      Z"/>
+                          H78
+                          Q86,22 86,30
+                          V78
+                          Q86,86 78,86
+                          H30
+                          Q22,86 22,78
+                          V30
+                          Q22,22 30,22
+                          Z"/>
 
-    <!-- Bell body -->
+    <!-- Bowl rim -->
     <path
         android:fillColor="@android:color/transparent"
         android:strokeColor="#000000"
-        android:strokeWidth="4"
+        android:strokeWidth="3.0"
+        android:strokeLineCap="round"
+        android:pathData="M37,49 H71"/>
+
+    <!-- Bowl body (now touching cushion) -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#000000"
+        android:strokeWidth="3.0"
         android:strokeLineCap="round"
         android:strokeLineJoin="round"
-        android:pathData="M54,38
-                          C45,38 40,45 40,55
-                          V63
-                          L34,69
-                          H74
-                          L68,63
-                          V55
-                          C68,45 63,38 54,38 Z"/>
+        android:pathData="M37,49
+                          C40,68 68,68 71,49"/>
 
-    <!-- Clapper -->
+    <!-- Cushion base -->
     <path
         android:fillColor="#000000"
-        android:pathData="M51.5,72 H56.5 V77 H51.5 Z"/>
+        android:pathData="M44,68
+                          H64
+                          Q67,68 67,71
+                          V72
+                          Q67,75 64,75
+                          H44
+                          Q41,75 41,72
+                          V71
+                          Q41,68 44,68
+                          Z"/>
+
+    <!-- Striker (lighter stroke) -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#000000"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:pathData="M68,42 L77,61"/>
+
 </vector>
