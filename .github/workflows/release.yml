@@ -40,9 +40,18 @@ jobs:
         run: |
           ./gradlew --no-daemon clean :app:assembleRelease :app:bundleRelease
 
+
+      - name: Prepare nicely named artifacts
+        run: |
+          mkdir -p release-artifacts
+          TAG_NAME="${GITHUB_REF_NAME}"
+          VERSION="${TAG_NAME#v}"
+          cp app/build/outputs/apk/release/app-release.apk "release-artifacts/einkMeditation-v${VERSION}.apk"
+          cp app/build/outputs/bundle/release/app-release.aab "release-artifacts/einkMeditation-v${VERSION}.aab"
+
       - name: Create GitHub Release and upload artifacts
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            app/build/outputs/apk/release/*.apk
-            app/build/outputs/bundle/release/*.aab
+            release-artifacts/*.apk
+            release-artifacts/*.aab
