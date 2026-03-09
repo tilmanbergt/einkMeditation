@@ -16,7 +16,8 @@ This app is guided by the following principles:
     - with start/end cues (bell / vibrartion / light flashing)
     - turn background light off during meditation
     - hide meditation time display during meditation
-    - adjustable pre-meditation countdown
+    - optional and adjustable pre-meditation countdown
+    - optional and adjustable interval bell
     - allow additional time to be tracked (or not)
     - use predefined meditation times or adjust to any time (minutes)
 - Practice overview with:
@@ -29,6 +30,10 @@ This app is guided by the following principles:
 - general features
   - supports English and German language
   - you can set your own long term and short term goals, the app will use the to provide you with meaningfull feedback and suggestions.
+  - delete sessions and add sessions manualy (right now a bit hidden under system -> view recent sessions)
+- adjustable
+  - hide frame
+  
 
 ## Developer and Support
 This is developed as a personal project by Tilman Bergt
