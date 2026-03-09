@@ -13,6 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BodhisattvaFriend">
+
+
+
         <activity android:name=".ImportPracticeActivity" />
         <activity android:name=".ExportPracticeActivity" />
         <activity android:name=".AddPracticeActivity" />
@@ -21,10 +24,12 @@
             android:exported="true">
 
         </activity>
+
         <activity
             android:name=".MeditationSetupActivity"
             android:exported="true"
             android:clearTaskOnLaunch="true"
+            android:theme="@style/Theme.BodhisattvaFriend.Launch"
             >
 
             <intent-filter>
@@ -39,7 +44,6 @@
         <activity
             android:name=".QuickCheckActivity"
             android:exported="true" android:clearTaskOnLaunch="true"
-            android:theme="@style/Theme.BodhisattvaFriend.Splash"
             android:launchMode="singleTask">
         </activity>
         <activity android:name=".HistoryActivity" />

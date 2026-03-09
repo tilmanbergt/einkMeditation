@@ -76,6 +76,7 @@ public class MeditationSetupActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.Theme_BodhisattvaFriend);
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_meditation_setup);
