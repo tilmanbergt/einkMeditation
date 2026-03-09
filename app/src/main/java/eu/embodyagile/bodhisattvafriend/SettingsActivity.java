@@ -141,7 +141,7 @@ if (enabled) {
 
             sw.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 AppSettings.setBackgroundFrameEnabled(this, isChecked);
-                recreate();
+                applyDisplaySettingsToRoot();
             });
         }
 
